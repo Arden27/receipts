@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chat-container { width: 80%; margin: auto; max-width: 800px; }
+        #chat-output { height: 400px; border: 1px solid #ccc; padding: 10px; overflow-y: auto; }
+        #chat-input { width: 100%; }
+        .chat-message { margin-bottom: 10px; }
+        .user-message { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-output"></div>
+        <input type="text" id="chat-input" placeholder="Type your message here and press Enter">
+    </div>
+    
+    <script>
+        const chatOutput = document.getElementById("chat-output");
+        const chatInput = document.getElementById("chat-input");
+        
+        chatInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                const message = chatInput.value.trim();
+                if (message) {
+                    chatInput.value = "";
+                    appendMessage("user-message", message);
+                    fetch(`/chatbot/?prompt=${encodeURIComponent(message)}`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            appendMessage("bot-message", data.response);
+                        });
+                }
+            }
+        });
+
+        function appendMessage(className, message) {
+            const messageElement = document.createElement("div");
+            messageElement.className = `chat-message ${className}`;
+            messageElement.textContent = message;
+            chatOutput.appendChild(messageElement);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }
+    </script>
+</body>
+</html>
