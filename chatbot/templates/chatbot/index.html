@@ -92,6 +92,11 @@
             chatOutput.appendChild(messageElement);
             chatOutput.scrollTop = chatOutput.scrollHeight;
         }
+        /* focus on input field */
+        function focusInputField() {
+            chatInput.focus();
+        }
+        document.addEventListener("DOMContentLoaded", focusInputField);
     </script>
 </body>
 </html>
