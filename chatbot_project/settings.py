@@ -33,7 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'artman.pythonanywhere.com',
-    'www.artemfurman.tech'
+    'www.artemfurman.tech',
+    '127.0.0.1',
 ]
 
 
