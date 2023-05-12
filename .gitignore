@@ -8,7 +8,7 @@ __pycache__/
 *.log
 *.bak
 *.swp
-staticfiles/
+staticfiles/staticfiles_backup/
 
 
 
