@@ -66,10 +66,23 @@
         .section {
             height: calc(100% - 50px);
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             padding: 50px;
             box-sizing: border-box;
+        }
+
+        .about-content {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+        }
+
+        #profile-picture {
+            width: 450px;
+            margin-right: 20px; /* Adjust as needed */
+            order: 0;
         }
 
         #chat-container {
@@ -172,8 +185,13 @@
     </div>
 
     <section id="about" class="section">
-        <h2>About Me</h2>
-        <p>Some information about me...</p>
+        <div class="about-content">
+            <img src="{% static 'img/profile_picture.jpg' %}" alt="Profile Picture" id="profile-picture">
+            <div>
+                <h2>About Me</h2>
+                <p>Some information about me...</p>
+            </div>
+        </div>
     </section>
 
     <section id="skills" class="section">
