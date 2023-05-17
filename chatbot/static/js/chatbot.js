@@ -44,4 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     document.addEventListener("DOMContentLoaded", focusInputField);
     */
+    document.getElementById('chat-close-button').addEventListener('click', function() {
+        document.getElementById('chat-container').style.display = 'none';
+        document.getElementById('chat-button').style.display = 'block';
+    });
+    
+    document.getElementById('chat-button').addEventListener('click', function() {
+        document.getElementById('chat-container').style.display = 'flex';
+        document.getElementById('chat-button').style.display = 'none';
+    });
+    
 });
