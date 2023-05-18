@@ -12,9 +12,9 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="#about">About me</a>
-        <a href="#skills">Skills</a>
-        <a href="#portfolio">Portfolio</a>
+        <a href="#about" class="navbar-element"><div>About me</div></a>
+        <a href="#skills" class="navbar-element"><div>Skills</div></a>
+        <a href="#portfolio" class="navbar-element"><div>Portfolio</div></a>
     </div>
 
     <section id="about" class="section">
@@ -52,6 +52,8 @@
         <p>Some information about my projects...</p>
     </section>
 
+    <div class="foot">(c) Created by Artem Furman 2023</div>
+
     <div id="chat-container">
         <div id="chat-close-button"></div>
         <div id="chat-output"></div>
@@ -61,6 +63,7 @@
         </div>
     </div>
     <button id="chat-button">Chat</button>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/chatbot.js' %}"></script>
 </body>
 </html>
