@@ -62,7 +62,7 @@ body {
 }
 
 .navbar-scrolled {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-element {
@@ -133,6 +133,69 @@ body {
     color: #f75023;
     border: 2px solid #f75023;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Reduced box-shadow on hover to create a pressed-down effect */
+}
+
+.skills-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* centers its children vertically */
+    justify-content: center; /* centers its children horizontally */
+    width: 100%;
+    text-align: center;
+}
+
+.skills-heading {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 2.5em;
+    width: 100%; /* add this line */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#skills {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-category {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.skill-category h3 {
+    font-size: 25px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.skills {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* centers the flex items on the line (horizontally) */
+    flex-wrap: wrap; 
+    width: 100%; /* give it full width so that flex items can center properly */
+}
+
+.skill {
+    width: calc(50% - 40px); 
+    margin: 10px; 
+    border: 2px solid black;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    box-sizing: border-box;
+    
+}
+
+#tools .skills {
+    justify-content: space-around;
+    flex-wrap: nowrap; 
+}
+
+.skill img {
+    width: 80px;
+    height: 80px; /* ensures the images are uniform */
 }
 
 .foot {
