@@ -52,7 +52,6 @@ body {
     width: 100%;
     color: white;
     padding: 12px;
-    padding-right: 50px;
     font-size: 16px;
     display: flex;
     justify-content: flex-end;
@@ -85,7 +84,7 @@ body {
 }
 
 .section {
-    height: calc(100% - 50px);
+    height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -139,22 +138,27 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center; /* centers its children vertically */
-    justify-content: center; /* centers its children horizontally */
+    justify-content: space-around; /* centers its children horizontally */
+    flex-wrap: wrap; /* lets the items in the container wrap onto multiple lines */
     width: 100%;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
-.skills-heading {
+.section-heading {
     text-align: center;
-    margin-bottom: 15px;
+    margin: 0;
+    padding: 0;
     font-size: 2.5em;
     width: 100%; /* add this line */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
-#skills {
+#skills-section {
     display: flex;
     flex-direction: column;
+    background-color: rgba(110, 191, 110, 0.7);
 }
 
 .skill-category {
@@ -162,12 +166,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0; /* add some vertical space between skill categories */
 }
 
 .skill-category h3 {
     font-size: 25px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 0;
+    padding: 0;
 }
 
 .skills {
@@ -194,8 +199,7 @@ body {
 }
 
 .skill img {
-    width: 80px;
-    height: 80px; /* ensures the images are uniform */
+    width: 30%;
 }
 
 .foot {
