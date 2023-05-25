@@ -13,8 +13,6 @@ __pycache__/
 /dist
 staticfiles/staticfiles_backup/
 
-
-
 # Ignore SQLite database file
 *.sqlite3
 
