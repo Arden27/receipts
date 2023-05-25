@@ -87,8 +87,8 @@ def get_potential_path(start, end, excluded=None):
 
 def main():
     global redirected_to
-    start_page = "Biology"
-    end_page = "Star"
+    start_page = "species"
+    end_page = "Animal"
     excluded_links = []
     excluded_links_per_page = {}
     current_page = start_page
