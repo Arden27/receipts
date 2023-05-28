@@ -15,6 +15,7 @@
 <body>
     <div id="slider"></div>
     <div id="priceSlider"></div>
+    <p id="currentPrice"></p>
     <p id="price"></p>
     <input id="dailyInvestment" type="number" min="0" placeholder="Daily investment in $">
     <p id="totalInvestment"></p>
@@ -72,6 +73,7 @@
                 max: priceMax,
                 value: currentPrice,
                 slide: function(event, ui) {
+                    $("#currentPrice").text(`Current set price: $${ui.value.toFixed(2)}`);
                     calculateTotalInvestment($("#slider").slider("value"), ui.value);
                 }
             });
@@ -82,6 +84,7 @@
 
             // Trigger the slide event to display the initial price
             $("#slider").slider("value", max);
+            $("#currentPrice").text(`Current set price: $${currentPrice.toFixed(2)}`);
         });
     </script>
 </body>
