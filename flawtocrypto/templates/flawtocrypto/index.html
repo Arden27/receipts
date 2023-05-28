@@ -1,14 +1,22 @@
 <!DOCTYPE html>
+
 <html>
+{% load static %}
 <head>
     <title>Bitcoin Price Viewer</title>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'flawtocrypto/css/main.css' %}">
 </head>
 <body>
     <div id="slider"></div>
     <p id="price"></p>
+    <input id="dailyInvestment" type="number" min="0" placeholder="Daily investment in $">
+    <p id="totalInvestment"></p>
+    <p id="totalBitcoin"></p>
+    <p id="initialInvestment"></p>
+    
 
     <script>
         $(function() {
@@ -16,18 +24,42 @@
             let min = 0;
             let max = prices.length - 1;
 
+            function calculateTotalInvestment(sliderValue) {
+                let dailyInvestment = $("#dailyInvestment").val();
+                if (dailyInvestment) {
+                    let totalBitcoin = 0;
+                    let investmentDays = max - sliderValue + 1;
+                    for (let i = sliderValue; i <= max; i++) {
+                        let priceData = prices[i];
+                        let price = priceData[1];
+                        let bitcoinPurchased = dailyInvestment / price;
+                        totalBitcoin += bitcoinPurchased;
+                    }
+                    let totalValue = totalBitcoin * prices[max][1];
+                    let initialInvestment = dailyInvestment * investmentDays;
+                    $("#totalInvestment").text(`Total value of investment: $${totalValue.toFixed(2)}`);
+                    $("#totalBitcoin").text(`Total Bitcoin purchased: ${totalBitcoin.toFixed(8)}`);
+                    $("#initialInvestment").text(`Sum of initial investments: $${initialInvestment}`);
+                }
+            }
+
             $("#slider").slider({
                 range: "max",
                 min: min,
                 max: max,
                 value: max,
                 slide: function(event, ui) {
-                    let priceData = prices[ui.value];
-                    let timestamp = priceData[0] / 1000;
+                    let currentPriceData = prices[ui.value];
+                    let timestamp = currentPriceData[0] / 1000;
                     let date = new Date(timestamp * 1000).toISOString().split('T')[0];
-                    let price = priceData[1].toFixed(2);
-                    $("#price").text(`Date: ${date} - Price: $${price}`);
+                    let currentPrice = currentPriceData[1];
+                    $("#price").text(`Date: ${date} - Price: $${currentPrice.toFixed(2)}`);
+                    calculateTotalInvestment(ui.value);
                 }
+            });
+
+            $("#dailyInvestment").on("input", function() {
+                calculateTotalInvestment($("#slider").slider("value"));
             });
 
             // Trigger the slide event to display the initial price
