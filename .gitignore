@@ -8,6 +8,10 @@ __pycache__/
 *.log
 *.bak
 *.swp
+*.DS_Store
+/node_modules
+/dist
+staticfiles/staticfiles_backup/
 
 
 
