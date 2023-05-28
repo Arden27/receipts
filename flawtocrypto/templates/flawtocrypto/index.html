@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bitcoin Price Viewer</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <div id="slider"></div>
+    <p id="price"></p>
+
+    <script>
+        $(function() {
+            let prices = {{ prices|safe }};
+            let min = 0;
+            let max = prices.length - 1;
+
+            $("#slider").slider({
+                range: "max",
+                min: min,
+                max: max,
+                value: max,
+                slide: function(event, ui) {
+                    let priceData = prices[ui.value];
+                    let timestamp = priceData[0] / 1000;
+                    let date = new Date(timestamp * 1000).toISOString().split('T')[0];
+                    let price = priceData[1].toFixed(2);
+                    $("#price").text(`Date: ${date} - Price: $${price}`);
+                }
+            });
+
+            // Trigger the slide event to display the initial price
+            $("#slider").slider("value", max);
+        });
+    </script>
+</body>
+</html>
