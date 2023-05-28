@@ -95,8 +95,12 @@
                     let timestamp = currentPriceData[0] / 1000;
                     let date = new Date(timestamp * 1000).toISOString().split('T')[0];
                     let currentPrice = $("#priceSlider").slider("value");
-                    $("#price").text(`Date: ${date} - Price: $${currentPrice.toFixed(2)}`);
+                    $(this).find(".handle-text").text(`Date: ${date} - Price: $${currentPrice.toFixed(2)}`);
                     calculateTotalInvestment(ui.value, currentPrice);
+                },
+                create: function() {
+                    let handle = $(this).find(".ui-slider-handle");
+                    handle.append('<span class="handle-text"></span>');
                 }
             });
 
