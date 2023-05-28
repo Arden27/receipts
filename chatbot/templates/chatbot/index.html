@@ -7,194 +7,174 @@
     <title>Chatbot</title>
     <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /*
-        html {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        */
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            margin: 0;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-        }
-
-        .development-banner {
-            position: fixed;
-            top: 0;
-            background-color: #ff9800;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            width: 100%;
-            box-sizing: border-box;
-            z-index: 1;
-        }
-
-        #chat-container {
-            background-color: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            width: 100%;
-            max-width: 400px;
-            height: calc(100% - 39px - env(safe-area-inset-top));
-            max-height: 90vh;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid #1a73e8;
-            width: calc(100% - 4px);
-            margin-top: 39px;
-        }
-
-        #chat-output {
-            flex-grow: 1;
-            padding: 10px;
-            overflow-y: auto;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #chat-input-container {
-            position: sticky;
-            bottom: 0;
-            display: flex;
-            width: 100%;
-            max-width: 400px;
-            height: calc(env(safe-area-inset-bottom) + 52px);
-            border-top: 2px solid #1a73e8;
-            box-sizing: border-box;
-        }
-
-        #send-button {
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            outline: none;
-            width: 20%;
-            box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #chat-input {
-            width: 80%;
-            border: none;
-            padding: 10px;
-            box-sizing: border-box;
-            outline: none;
-            border-left: 1px solid #1a73e8;
-        }
-
-        .chat-message {
-            margin-bottom: 10px;
-            line-height: 1.4;
-            max-width: 60%;
-            padding: 10px;
-            border-radius: 15px;
-            clear: both;
-        }
-
-        .user-message {
-            font-weight: 500;
-            color: #1a73e8;
-            background-color: #e4f0ff;
-            float: right;
-            border-bottom-right-radius: 5px;
-        }
-
-        .bot-message {
-            font-weight: 400;
-            color: #333;
-            background-color: #f1f3f4;
-            float: left;
-            border-bottom-left-radius: 5px;
-        }
-
-        @media (min-width: 1024px) {
-            #chat-container {
-                position: fixed;
-                right: 0;
-                margin-top: 0;
-                margin-right: 10px;
-                height: calc(100% - env(safe-area-inset-top));
-            }
-        }
-</style>
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/chatbot.css' %}" rel="stylesheet">
 </head>
 <body>
-    <div class="development-banner">This page is developing</div>
+    <div class="navbar">
+        <a href="#home-section" class="navbar-element">Home</a>
+        <a href="#skills-section" class="navbar-element">Skills</a>
+        <a href="#portfolio-section" class="navbar-element">Portfolio</a>
+        <a href="#about-section" class="navbar-element">About</a>
+    </div>
+
+    <section id="home-section" class="section">
+        <div class="about-content">
+            <img src="{% static 'img/profile_picture.png' %}" alt="Profile Picture" id="profile-picture">
+            <div class="details">
+                <div class="hello">
+                    <div class="orangeText">Hello, I'm</div>
+                </div>
+                <div class="name">
+                    <h3>Artem Furman</h3>
+                </div>
+                <div class="job">
+                    <p><span class="greenText">Python Developer</span></p>
+                </div>
+                <div class="text">
+                    <p>I specialize in the creation and deployment of email marketing campaigns.</p>
+                </div>
+                <a href="#portfolio-section">
+                    <div class="portfolio-button">
+                        <span>Portfolio</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills-section" class="section">
+        <h2 class="section-heading">Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <div class="skills">
+                    <div class="skill">
+                        <img src="{% static 'img/skills/html.png' %}" alt="HTML icon">
+                        <p>HTML</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/css.png' %}" alt="css icon">
+                        <p>CSS</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/js.png' %}" alt="js icon">
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/react.png' %}" alt="react icon">
+                        <p>React.js</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/tailwind.png' %}" alt="Tailwind icon">
+                        <p>Tailwind</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/kivy.png' %}" alt="Kivy icon">
+                        <p>Kivy</p>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Backend</h3>
+                <div class="skills">
+                    <div class="skill">
+                        <img src="{% static 'img/skills/python.png' %}" alt="Python icon">
+                        <p>Python</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/django.png' %}" alt="Django icon">
+                        <p>Django</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/pytorch.png' %}" alt="PyTorch icon">
+                        <p>PyTorch</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/mongodb.png' %}" alt="MongoDB icon">
+                        <p>MongoDB</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/mysql.png' %}" alt="MySQL icon">
+                        <p>MySQL</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/solidity.png' %}" alt="Solidity icon">
+                        <p>Solidity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="skills-container">
+            <div class="skill-category" id="tools">
+                <h3>Tools</h3>
+                <div class="skills">
+                    <div class="skill">
+                        <img src="{% static 'img/skills/git.png' %}" alt="Git icon">
+                        <p>Git</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/vscode.png' %}" alt="VSCode icon">
+                        <p>VSCode</p>
+                    </div>
+                    <div class="skill">
+                        <img src="{% static 'img/skills/linux.png' %}" alt="Linux icon">
+                        <p>Linux</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio-section" class="section">
+        <h2 class="section-heading">Portfolio</h2>
+        <div class="projects-container">
+            <div class="project">
+                <h4>Project</h4>
+            </div> 
+            <div class="project">
+                <h4>Project</h4>
+            </div> 
+            <div class="project">
+                <h4>Project</h4>
+            </div> 
+            <div class="project">
+                <h4>Project</h4>
+            </div> 
+            <div class="project">
+                <h4>Project</h4>
+            </div> 
+            <div class="project">
+                <h4>Project</h4>
+            </div> 
+        </div>
+    </section>
+
+    <section id="about-section" class="section">
+        <h2 class="section-heading">About me</h2>
+        <div class="about-container">
+            <img src="{% static 'img/about.jpeg' %}" alt="About Picture" id="about-picture">
+            <div class="about">
+                <h3>About</h4>
+                <h4>fagdzfsdfvsdzsfadzvezrsffvzs</h4>
+            </div> 
+        </div>
+
+        <div class="foot"><span>(c) Created by Artem Furman 2023</span></div>
+    </section>
+
+    
 
     <div id="chat-container">
+        <div id="chat-close-button"></div>
         <div id="chat-output"></div>
         <div id="chat-input-container">
             <input type="text" id="chat-input" placeholder="Type your message here and press Enter">
             <button id="send-button">Send</button>
         </div>
     </div>
-
-    <script>
-        const chatOutput = document.getElementById("chat-output");
-        const chatInput = document.getElementById("chat-input");
-        const sendButton = document.getElementById("send-button");
-
-        // Function to send a message
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message) {
-                chatInput.value = "";
-                appendMessage("user-message", message);
-                fetch(`/?prompt=${encodeURIComponent(message)}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        appendMessage("bot-message", data.response);
-                    });
-            }
-        }
-
-        // Event listener for the "Enter" key
-        chatInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                sendMessage();
-            }
-        });
-
-        // Event listener for the "Send" button
-        sendButton.addEventListener("click", () => {
-            sendMessage();
-        });
-
-        function appendMessage(className, message) {
-            const messageElement = document.createElement("div");
-            messageElement.className = `chat-message ${className}`;
-            messageElement.textContent = message;
-            chatOutput.appendChild(messageElement);
-            chatOutput.scrollTop = chatOutput.scrollHeight;
-        }
-        /* focus on input field */
-        function focusInputField() {
-            chatInput.focus();
-        }
-        document.addEventListener("DOMContentLoaded", focusInputField);
-    </script>
+    <button id="chat-button">Chat</button>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/chatbot.js' %}"></script>
 </body>
 </html>
