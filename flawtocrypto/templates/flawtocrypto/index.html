@@ -9,19 +9,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'flawtocrypto/css/main.css' %}">
     <style>
+        * {
+            outline: none;
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
         #priceSlider { height: 200px; float: right; }
+        .ui-slider-handle { width: 50px; height: 50px; text-align: center; line-height: 50px; position: relative; }
+        .ui-slider .ui-slider-handle { padding: 0; }
+        .handle-text { 
+        position: absolute; 
+        width: 120px; /* Adjusted width */
+        text-align: right; 
+        right: 100%; 
+        top: 0; 
+        line-height: 22px; 
+        margin-right: 12px; /* Adjust the space between handle and text */
+        }
     </style>
 </head>
 <body>
     <div id="slider"></div>
     <div id="priceSlider"></div>
-    <p id="currentPrice"></p>
     <p id="price"></p>
     <input id="dailyInvestment" type="number" min="0" placeholder="Daily investment in $">
     <p id="totalInvestment"></p>
     <p id="totalBitcoin"></p>
     <p id="initialInvestment"></p>
-    
 
     <script>
         $(function() {
@@ -31,7 +45,7 @@
             let currentPrice = prices[max][1];
             let priceMin = 0;
             let priceMax = currentPrice * 100;
-            
+
             function calculateTotalInvestment(sliderValue, currentPrice) {
                 let dailyInvestment = $("#dailyInvestment").val();
                 if (dailyInvestment) {
@@ -73,8 +87,12 @@
                 max: priceMax,
                 value: currentPrice,
                 slide: function(event, ui) {
-                    $("#currentPrice").text(`Current set price: $${ui.value.toFixed(2)}`);
+                    $(".handle-text").text(`$${ui.value.toFixed(2)}`);
                     calculateTotalInvestment($("#slider").slider("value"), ui.value);
+                },
+                create: function() {
+                    let handle = $(this).find(".ui-slider-handle");
+                    handle.append('<span class="handle-text">$' + $(this).slider('value').toFixed(2) + '</span>');
                 }
             });
 
@@ -84,7 +102,6 @@
 
             // Trigger the slide event to display the initial price
             $("#slider").slider("value", max);
-            $("#currentPrice").text(`Current set price: $${currentPrice.toFixed(2)}`);
         });
     </script>
 </body>
