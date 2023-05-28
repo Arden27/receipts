@@ -60,22 +60,29 @@ def get_potential_path(start, end, excluded=None):
         prompt_exclusion = f"IMPORTANT: Do not include these links: {', '.join(excluded)}."
     else:
         prompt_exclusion = ""
-
+    context = f"Given your knowledge up to 2021, suggest a potential path of Wikipedia links leading from '{start}' to '{end}' in the format 'Page 1 -> Page 2 -> Page 3'. {prompt_exclusion}"
     response = None
     while True:
         try:
-            response = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=f"Given your knowledge up to 2021, suggest a potential path of Wikipedia links leading from '{start}' to '{end}' in the format 'Page 1 -> Page 2 -> Page 3'. {prompt_exclusion}",
-                temperature=0.5,
-                max_tokens=100
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": context
+                    }
+                ],
+                max_tokens=300
             )
             break  # If the request is successful, break the loop
         except openai.error.Timeout as e:
             print(f"Request to OpenAI timed out: {e}")
             input("Press enter to retry...")
+        except openai.error.RateLimitError as e:
+            print(f"Hit OpenAI rate limit: {e}. Retrying in 30 seconds...")
+            input("Press enter to retry...")
     
-    text = response.choices[0].text.strip().lower()
+    text = response.choices[0].message['content'].strip()
     print()
     print(f"AI response: {text}")
     path = re.split(' -> ', re.sub(r'\d+\. ?', '', text.strip()))
@@ -87,8 +94,8 @@ def get_potential_path(start, end, excluded=None):
 
 def main():
     global redirected_to
-    start_page = "species"
-    end_page = "Animal"
+    start_page = "Biology"
+    end_page = "Star"
     excluded_links = []
     excluded_links_per_page = {}
     current_page = start_page
@@ -102,6 +109,14 @@ def main():
             if redirected_to is not None:
                 current_page = redirected_to
                 redirected_to = None  # Reset the redirected_to variable for the next iteration
+
+            # Check if link to final page (Star) is found
+            stripped_end_page = re.sub(r' \(.*?\)', '', end_page.lower())  # Remove anything in parentheses
+            if stripped_end_page in [link.lower() for link in links]:
+                print(f"{Fore.GREEN}FOUND{Fore.RESET} link to '{end_page}' in '{page}' page.")
+                return  # Stop the program as the path to the final page is found
+
+            # Continue with the loop to search for links to the next item in the path
             for link in links:
                 stripped_link = re.sub(r' \(.*?\)', '', link)
                 if path[i+1] in (link, stripped_link):
