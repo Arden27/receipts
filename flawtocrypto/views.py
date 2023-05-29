@@ -38,6 +38,12 @@ def get_historical_bitcoin_price(days="max"):
 
     new_prices.reverse()  # Reverse the list to keep the original order
 
+    # Write the prices to a text file
+    with open('bitcoin_prices.txt', 'w') as f:
+        for price in new_prices:
+            date = datetime.fromtimestamp(price[0] / 1000).date()
+            f.write(f"{date}: ${price[1]}\n")
+
     return new_prices
 
 

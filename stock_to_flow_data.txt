@@ -1,0 +1,1 @@
+Date,Stock-to-Flow Ratio,Stock-to-Flow Price

@@ -177,7 +177,7 @@
             $("#slider").slider("value", max);
 
             // Create chart data
-            let chartLabels = prices.map(item => new Date(item[0] / 1000).toISOString().split('T')[0]);
+            let chartLabels = prices.map(item => new Date(item[0]).toISOString().split('T')[0]);
             let chartData = prices.map(item => item[1]);
 
             // Create chart
