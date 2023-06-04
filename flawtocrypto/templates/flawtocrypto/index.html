@@ -15,6 +15,11 @@
             outline: none;
             user-select: none;
             -webkit-tap-highlight-color: rgba(0,0,0,0);
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
         }
 
         body {
@@ -24,14 +29,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100%;
         }
 
         /* Styles specific to the elements */
         #slider {
             width: 90%;
-            margin-top: 60px;
-            margin-bottom: 0;
-            padding: 0;
         }
 
         #price {
@@ -55,27 +58,42 @@
             left: 100%; 
             top: 0; 
             line-height: 22px; 
-            margin-left: 2px; 
+        }
+
+        .input-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sliders-and-chart-container {
+            flex: 4;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .chart-and-slider-container {
             display: flex;
+            flex-direction: row;
             justify-content: flex-start;
             width: 100%;
+            height: 100%;
             align-items: flex-start;
-        }
-
-        .chart-and-slider-container > div {
-            margin-right: 5px;
         }
 
         .price-slider-container {
             display: flex;
             flex-direction: column;
+            height: 100%;
+            align-items: flex-end;
         }
 
         #priceSlider { 
-            height: 600px; 
+            height: 100%; 
         }
 
         #dailyInvestment {
@@ -96,28 +114,32 @@
 
 </head>
 <body>
+    <div class="input-container">
+        <p style="display: flex; align-items: center; gap: 5px;">
+            <span>Investing $</span>
+            <input id="dailyInvestment" type="number" min="0" placeholder="Daily investment in $">
+            <span id="investmentPeriod">per day</span>
+            <span id="investmentDetails"></span>
+        </p>
+    </div>
     
-    <p style="display: flex; align-items: center; gap: 5px;">
-        <span>Investing $</span>
-        <input id="dailyInvestment" type="number" min="0" placeholder="Daily investment in $">
-        <span id="investmentPeriod">per day</span>
-        <span id="investmentDetails"></span>
-    </p>
-    <div id="slider"></div>
+    
     <!--
     <p id="investmentDetails"></p>
     -->
-    
-    <div class="chart-and-slider-container">
-        <div style="width: 90%;">
-            <canvas id="bitcoinChart"></canvas> <!-- Canvas where the chart will be drawn -->
+    <div class=sliders-and-chart-container>
+        <div id="slider"></div>
+        <div class="chart-and-slider-container">
+            <div style="width: 90%;">
+                <canvas id="bitcoinChart"></canvas> <!-- Canvas where the chart will be drawn -->
+            </div>
+            <div class="price-slider-container">
+                <div id="priceSlider"></div>
+                <button id="resetPrice">Reset Price</button>
+            </div>
         </div>
-        <div class="price-slider-container">
-            <div id="priceSlider"></div>
-            <button id="resetPrice">Reset Price</button>
-        </div>
-        
     </div>
+    
 
     <script>
         $(function() {
