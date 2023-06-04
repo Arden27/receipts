@@ -98,12 +98,15 @@
 <body>
     
     <p style="display: flex; align-items: center; gap: 5px;">
-        <span>Investing</span>
+        <span>Investing $</span>
         <input id="dailyInvestment" type="number" min="0" placeholder="Daily investment in $">
-        <span>per day</span>
+        <span id="investmentPeriod">per day</span>
+        <span id="investmentDetails"></span>
     </p>
     <div id="slider"></div>
+    <!--
     <p id="investmentDetails"></p>
+    -->
     
     <div class="chart-and-slider-container">
         <div style="width: 90%;">
@@ -128,7 +131,7 @@
 
             function calculateTotalInvestment(sliderValue, priceForCalculation) {
                 let dailyInvestment = $("#dailyInvestment").val();
-                if (dailyInvestment) {
+                if (dailyInvestment && sliderValue !== max) {
                     let totalBitcoin = 0;
                     let investmentDays = max - sliderValue + 1;
                     for (let i = sliderValue; i <= max; i++) {
@@ -144,7 +147,11 @@
                     $("#totalBitcoin").text(`Total Bitcoin purchased: ${totalBitcoin.toFixed(8)}`);
                     $("#initialInvestment").text(`Sum of initial investments: $${initialInvestment}`);
                     */
-                    $("#investmentDetails").text(`Investing $${dailyInvestment}/day for ${investmentDays} days ($${initialInvestment} total), you'd now have ${totalBitcoin.toFixed(8)} BTC worth $${totalValue.toFixed(2)} at current rate $${selectedPrice.toFixed(2)}.`);
+                    //$("#investmentDetails").text(`Investing $${dailyInvestment}/day for ${investmentDays} days ($${initialInvestment} total), you'd now have ${totalBitcoin.toFixed(8)} BTC worth $${totalValue.toFixed(2)} at current rate $${selectedPrice.toFixed(2)}.`);
+
+                    // Update daily investment and the following text
+
+                    $("#dailyInvestment").next().text(`/day for ${investmentDays} days ($${initialInvestment} total), you'd now have ${totalBitcoin.toFixed(8)} BTC worth $${totalValue.toFixed(2)} at current rate $${selectedPrice.toFixed(2)}.`);
                 }
             }
 
@@ -188,6 +195,19 @@
                 let newWidth = $(this).val().length > 1 ? $(this).val().length * 8 + 'px' : '10px';
                 $(this).css('width', newWidth);
                 calculateTotalInvestment($("#slider").slider("value"), selectedPrice);
+
+                // Update the text based on whether there's input
+                if ($(this).val().length > 0 && $("#slider").slider("value") === max) {
+                    $("#investmentPeriod").fadeOut(function() {
+                        $(this).text("/day. Now use slider.").fadeIn();
+                    });
+                } else if ($(this).val().length === 0) {
+                    $("#investmentPeriod").fadeOut(function() {
+                        $(this).text("per day").fadeIn(); // Reset the text when the input field is empty
+                    });
+                } else {
+                    calculateTotalInvestment($("#slider").slider("value"), selectedPrice);
+                }
             });
 
             // Listen for a click event on the reset button
