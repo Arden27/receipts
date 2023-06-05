@@ -25,19 +25,40 @@
         body {
             /* overflow: hidden; */
             font-family: Arial, sans-serif;
-            padding: 10px;
             background-color: #f0f0f0;
             display: flex;
+            position: relative;
             flex-direction: column;
             align-items: center;
             height: 100%;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         /* Styles specific to the elements */
+        .input-container {
+            position: relative;
+            height: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            width: 100%;
+            background-color: #78b881;
+        }
+
+        .slider-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 20%;
+            width: 100%;
+            background-color: #716294;
+        }
+
         #slider {
-            width: 90%;
+            width: 91.5%;
+            left: 3.3%;
         }
 
         #price {
@@ -57,25 +78,20 @@
         .price-slider-text { 
             position: absolute; 
             width: 120px; 
-            text-align: left; 
-            left: 100%; 
+            text-align: right; 
+            right: 100%; 
             top: 0; 
             line-height: 22px; 
         }
 
-        .input-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .sliders-and-chart-container {
-            flex: 4;
-            width: 100%;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            height: 85%;
+            width: 100%;
+            background-color: #668499;
         }
 
         .chart-and-slider-container {
@@ -83,19 +99,35 @@
             flex-direction: row;
             justify-content: flex-start;
             width: 100%;
-            height: 100%;
+            height: 90%;
             align-items: flex-start;
         }
 
+        .chart-container {
+            width: 95%;
+            height: 100%;
+            background-color: #ba93ae;
+        }
+
         .price-slider-container {
+            position: relative;
+            background-color: #b87878;
             display: flex;
             flex-direction: column;
             height: 100%;
-            align-items: flex-end;
+            width: 5%;
+            align-items: center;
         }
 
         #priceSlider { 
-            height: 100%; 
+            position: absolute;
+            height: 84%; 
+            top: 5%;
+        }
+
+        #resetPrice {
+            position: absolute;
+            bottom: 0;
         }
 
         #dailyInvestment {
@@ -130,9 +162,12 @@
     <p id="investmentDetails"></p>
     -->
     <div class=sliders-and-chart-container>
-        <div id="slider"></div>
+        <div class="slider-container">
+            <div id="slider"></div>
+        </div>
+        
         <div class="chart-and-slider-container">
-            <div style="width: 90%;">
+            <div class="chart-container">
                 <canvas id="bitcoinChart"></canvas> <!-- Canvas where the chart will be drawn -->
             </div>
             <div class="price-slider-container">
@@ -198,6 +233,8 @@
                 }
             });
 
+            let draggingPriceSlider = false;
+
             $("#priceSlider").slider({
                 orientation: "vertical",
                 range: "max",
@@ -207,16 +244,44 @@
                 slide: function(event, ui) {
                     selectedPrice = ui.value;
                     $(this).find(".price-slider-text").text(`$${selectedPrice.toFixed(2)}`);
-                calculateTotalInvestment($("#slider").slider("value"), selectedPrice);
+                    $(".price-slider-text").show();
+                    calculateTotalInvestment($("#slider").slider("value"), selectedPrice);
                 },
                 create: function() {
                     let handle = $(this).find(".ui-slider-handle");
                     handle.append('<span class="price-slider-text">$' + $(this).slider('value').toFixed(2) + '</span>');
+                    $(".price-slider-text").hide();
+                },
+                start: function(event, ui) {
+                    draggingPriceSlider = true; // Update flag when dragging starts
+                },
+                stop: function(event, ui) {
+                    draggingPriceSlider = false; // Update flag when dragging stops
+                    if (!$("#priceSlider").is(":hover")) {
+                        $(".price-slider-text").fadeOut();
+                    }
+                }
+                /*
+                stop: function(event, ui) {
+                    $(".price-slider-text").fadeOut();
+                }
+                */
+            });
+
+            // Show price slider text when mouse is over the price slider
+            $(".price-slider-container").mouseenter(function() {
+                $(this).find(".price-slider-text").stop().fadeIn();
+            });
+
+            // Hide price slider text when mouse leaves the price slider
+            $(".price-slider-container").mouseleave(function() {
+                if (!draggingPriceSlider) {
+                    $(this).find(".price-slider-text").stop().fadeOut();
                 }
             });
 
             $("#dailyInvestment").on("input", function() {
-                let newWidth = $(this).val().length > 1 ? $(this).val().length * 8 + 'px' : '10px';
+                let newWidth = $(this).val().length > 1 ? $(this).val().length * 10 + 'px' : '12px';
                 $(this).css('width', newWidth);
                 calculateTotalInvestment($("#slider").slider("value"), selectedPrice);
 
