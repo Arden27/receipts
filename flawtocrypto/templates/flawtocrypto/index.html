@@ -38,22 +38,22 @@
         /* Styles specific to the elements */
         .input-container {
             position: relative;
-            height: 15%;
+            height: 10%;
             display: flex;
             align-items: center;
             justify-content: center;
             top: 0;
             width: 100%;
-            background-color: #78b881;
+            background-color: #bed1c1;
         }
 
         .slider-container {
             position: relative;
             display: flex;
             align-items: center;
-            height: 20%;
+            height: 10%;
             width: 100%;
-            background-color: #716294;
+            background-color: #a79bc4;
         }
 
         #slider {
@@ -70,7 +70,16 @@
             position: absolute; 
             width: 120px;
             text-align: center; 
-            bottom: calc(100% + 10px); 
+            bottom: calc(100% + 2px); 
+            left: 50%; 
+            transform: translateX(-50%); 
+        }
+
+        .past-price-slider-text { 
+            position: absolute; 
+            width: 120px;
+            text-align: center; 
+            top: calc(100% + 2px); 
             left: 50%; 
             transform: translateX(-50%); 
         }
@@ -89,9 +98,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 85%;
+            height: 90%;
             width: 100%;
-            background-color: #668499;
         }
 
         .chart-and-slider-container {
@@ -106,7 +114,6 @@
         .chart-container {
             width: 95%;
             height: 100%;
-            background-color: #ba93ae;
         }
 
         .price-slider-container {
@@ -224,12 +231,14 @@
                     let timestamp = currentPriceData[0] / 1000;
                     let date = new Date(timestamp * 1000).toISOString().split('T')[0];
                     let currentPrice = prices[ui.value][1];
-                    $(this).find(".date-slider-text").html(`${date} <br>$${currentPrice.toFixed(2)}`);
+                    $(this).find(".date-slider-text").html(`${date}`);
+                    $(this).find(".past-price-slider-text").html(`${currentPrice.toFixed(2)}`);
                     calculateTotalInvestment(ui.value, selectedPrice);
                 },
                 create: function() {
                     let handle = $(this).find(".ui-slider-handle");
                     handle.append('<span class="date-slider-text"></span>');
+                    handle.append('<span class="past-price-slider-text"></span>');
                 }
             });
 
