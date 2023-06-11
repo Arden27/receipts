@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('chatbot.urls')),
     path('flaws/', include('flawtocrypto.urls')),
+    path('api/', include('receipts.urls')),
 ]
