@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ReceiptForm from './ReceiptForm';
+import ReceiptList from './ReceiptList';
 
 function App() {
+  const [shouldRefresh, setShouldRefresh] = useState(true);
+
+  const handleFormSubmit = () => {
+    setShouldRefresh(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ReceiptForm onSubmit={handleFormSubmit} />
+      <ReceiptList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
     </div>
   );
 }
