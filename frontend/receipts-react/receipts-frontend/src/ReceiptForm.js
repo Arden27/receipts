@@ -9,7 +9,7 @@ function ReceiptForm({ onSubmit }) {
 
     // Function to handle adding a new item
     const addItem = () => {
-        setItems([...items, { itemName: "", price: "" }]);
+        setItems([...items, { item_name: "", price: "" }]);
     };
 
     // Function to handle updating an item

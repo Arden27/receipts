@@ -3,18 +3,25 @@ import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
 
 function App() {
-  const [shouldRefresh, setShouldRefresh] = useState(true);
+    const [addingReceipt, setAddingReceipt] = useState(false);
+    const [shouldRefresh, setShouldRefresh] = useState(true);
 
-  const handleFormSubmit = () => {
-    setShouldRefresh(true);
-  };
+    const handleAddReceiptClick = () => {
+        setAddingReceipt(true);
+    };
 
-  return (
-    <div className="App">
-      <ReceiptForm onSubmit={handleFormSubmit} />
-      <ReceiptList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
-    </div>
-  );
+    const handleReceiptSubmit = () => {
+        setAddingReceipt(false);
+        setShouldRefresh(true);
+    };
+
+    return (
+        <div className="App">
+            {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
+            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
+            <ReceiptList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
+        </div>
+    );
 }
 
 export default App;

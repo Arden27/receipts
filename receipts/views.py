@@ -6,6 +6,7 @@ from .serializers import ReceiptItemSerializer, ReceiptSerializer
 class ReceiptItemViewSet(viewsets.ModelViewSet):
     queryset = ReceiptItem.objects.all()
     serializer_class = ReceiptItemSerializer
+    filterset_fields = ['receipt']
 
 class ReceiptViewSet(viewsets.ModelViewSet):
     queryset = Receipt.objects.all()
