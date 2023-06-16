@@ -1,4 +1,3 @@
-// ReceiptList.js
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
@@ -15,17 +14,28 @@ function ReceiptList({ shouldRefresh, setShouldRefresh }) {
                 .then(res => {
                     const receiptData = res.data;
                     setReceipts(receiptData);
-                    resetRefresh(); // Use the memoized function
+                    resetRefresh();
                 });
         }
     }, [shouldRefresh, resetRefresh]);
 
     return (
-        <ul>
-            {receipts.map(receipt => (
-                <li key={receipt.id}>{receipt.item_name} - {receipt.price} - {new Date(receipt.purchase_date).toLocaleDateString()}</li>
+        <div>
+            {receipts.map((receipt) => (
+                <div key={receipt.id}>
+                    <h2>Receipt #{receipt.id}</h2>
+                    <p>Date: {new Date(receipt.date).toLocaleDateString()}</p>
+                    <p>Store: {receipt.store}</p>
+                    <p>Total: {receipt.total}</p>
+                    {receipt.items && receipt.items.map((item, index) => (
+                        <div key={index}>
+                            <p>Item: {item.item_name}</p>
+                            <p>Price: {item.price}</p>
+                        </div>
+                    ))}
+                </div>
             ))}
-        </ul>
+        </div>
     );
 }
 
