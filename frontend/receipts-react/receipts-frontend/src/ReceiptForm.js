@@ -80,7 +80,11 @@ function ReceiptForm({ onSubmit }) {
             </label>
             <label>
                 Total:
-                <input type="number" value={totalAmount || ''} onChange={e => setTotalAmount(e.target.value)} />
+                <input 
+                    type="number" 
+                    value={totalAmount || ''} 
+                    onChange={e => setTotalAmount(e.target.value === '' ? null : Number(e.target.value))} 
+                />
             </label>
             {items.map((item, index) => (
                 <ReceiptItemForm 
@@ -93,6 +97,7 @@ function ReceiptForm({ onSubmit }) {
             <button type="submit">Submit Receipt</button>
         </form>
     );
+    
 }
 
 export default ReceiptForm;
