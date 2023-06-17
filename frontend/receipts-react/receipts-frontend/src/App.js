@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
+import ReceiptItemList from './ReceiptItemList';
 
 function App() {
     const [addingReceipt, setAddingReceipt] = useState(false);
@@ -20,6 +21,7 @@ function App() {
             {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
             {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
             <ReceiptList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
+            <ReceiptItemList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
         </div>
     );
 }

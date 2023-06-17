@@ -11,7 +11,7 @@ function ReceiptItemList({ shouldRefresh, setShouldRefresh }) {
 
     useEffect(() => {
         if (shouldRefresh) {
-            axios.get(`/api/receipts/`)
+            axios.get(`/api/receiptitems/`)
                 .then(res => {
                     const receiptItemData = res.data;
                     setReceiptItems(receiptItemData);
@@ -23,7 +23,7 @@ function ReceiptItemList({ shouldRefresh, setShouldRefresh }) {
     return (
         <ul>
             {receiptItems.map(item => (
-                <li key={item.id}>{item.item_name} - {item.price} - {new Date(item.purchase_date).toLocaleDateString()}</li>
+                <li key={item.id}>{item.item_name} - {item.price}</li>
             ))}
         </ul>
     );
