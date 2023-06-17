@@ -1,35 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReceiptItemForm from './ReceiptItemForm';
 import axios from 'axios';
 
 function ReceiptForm({ onSubmit }) {
     const [store, setStore] = useState("");
     const [date, setDate] = useState("");
+    const [totalAmount, setTotalAmount] = useState(null);
     const [items, setItems] = useState([{ item_name: "", price: "" }]);
 
-    // Function to handle adding a new item
-    const addItem = () => {
-        setItems([...items, { item_name: "", price: "" }]);
-    };
+    const addItem = useCallback(() => {
+        setItems(items => [...items, { item_name: "", price: "" }]);
+    }, []);
+    
+    useEffect(() => {
+        const totalSum = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
+        const lastItem = items[items.length - 1];
+    
+        if (totalAmount != null && totalSum < totalAmount && lastItem.price !== "") {
+            const timer = setTimeout(addItem, 750);
+            
+            return () => clearTimeout(timer);
+        } else if (totalAmount != null && totalSum >= totalAmount && lastItem.price === "" && items.length > 1) {
+            setItems(items => items.filter((item, index) => index !== items.length - 1));
+        }
+    }, [totalAmount, items, addItem]);
+    
 
-    // Function to handle updating an item
     const updateItem = (index, updatedItem) => {
         let newItems = [...items];
         newItems[index] = updatedItem;
         setItems(newItems);
     };
 
-    // Function to handle form submission
     const handleSubmit = event => {
         event.preventDefault();
 
-        // Calculate the total price of all items
-        let total = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
+        let totalSum = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
+        if (totalAmount != null && totalSum > totalAmount) {
+            // Don't submit if the sum of item prices is more than the total amount provided
+            return;
+        }
 
         const receipt = { 
             date: date,
             store: store,
-            total: total.toFixed(2),
+            total: totalSum.toFixed(2),
         };
         
         // Make a POST request to the Receipt API to create a new receipt
@@ -38,7 +53,7 @@ function ReceiptForm({ onSubmit }) {
                 const receiptId = res.data.id;  // get the id of the created receipt
         
                 // For each item, we add the receipt id and make a POST request to the ReceiptItem API
-                items.forEach(item => {
+                items.filter(item => item.price && item.item_name).forEach(item => {
                     const receiptItem = { ...item, receipt: receiptId };
                     axios.post(`/api/receiptitems/`, receiptItem)
                         .then(res => console.log(res))
@@ -63,6 +78,10 @@ function ReceiptForm({ onSubmit }) {
                 Date:
                 <input type="date" value={date} onChange={e => setDate(e.target.value)} />
             </label>
+            <label>
+                Total:
+                <input type="number" value={totalAmount || ''} onChange={e => setTotalAmount(e.target.value)} />
+            </label>
             {items.map((item, index) => (
                 <ReceiptItemForm 
                     key={index} 
@@ -70,7 +89,7 @@ function ReceiptForm({ onSubmit }) {
                     onItemChange={updatedItem => updateItem(index, updatedItem)} 
                 />
             ))}
-            <button type="button" onClick={addItem}>Add Another Item</button>
+            {totalAmount == null && <button type="button" onClick={addItem}>Add Another Item</button>}
             <button type="submit">Submit Receipt</button>
         </form>
     );
