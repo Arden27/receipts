@@ -3,8 +3,11 @@ import ReceiptItemForm from './ReceiptItemForm';
 import axios from 'axios';
 
 function ReceiptForm({ onSubmit }) {
+    const today = new Date();
+    const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
     const [store, setStore] = useState("");
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(formattedDate);
     const [totalAmount, setTotalAmount] = useState(null);
     const [items, setItems] = useState([{ item_name: "", price: "" }]);
 
