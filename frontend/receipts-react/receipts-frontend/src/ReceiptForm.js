@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReceiptItemForm from './ReceiptItemForm';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setShouldRefresh } from './redux/store';
 
 function ReceiptForm({ onSubmit }) {
     const today = new Date();
@@ -10,6 +12,8 @@ function ReceiptForm({ onSubmit }) {
     const [date, setDate] = useState(formattedDate);
     const [totalAmount, setTotalAmount] = useState(null);
     const [items, setItems] = useState([{ item_name: "", price: "" }]);
+
+    const dispatch = useDispatch();
 
     const addItem = useCallback(() => {
         setItems(items => [...items, { item_name: "", price: "" }]);
@@ -63,10 +67,8 @@ function ReceiptForm({ onSubmit }) {
                         .catch(error => console.error(error));
                 });
         
-                // Call the callback function passed from the parent component
-                if (onSubmit) {
-                    onSubmit();
-                }
+                dispatch(setShouldRefresh(true));
+                onSubmit();
             })
             .catch(error => console.error(error));
     };

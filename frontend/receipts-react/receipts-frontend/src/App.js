@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
 import ReceiptItemList from './ReceiptItemList';
 
 function App() {
     const [addingReceipt, setAddingReceipt] = useState(false);
-    const [shouldRefresh, setShouldRefresh] = useState(true);
+    const dispatch = useDispatch();
 
     const handleAddReceiptClick = () => {
         setAddingReceipt(true);
@@ -13,15 +14,15 @@ function App() {
 
     const handleReceiptSubmit = () => {
         setAddingReceipt(false);
-        setShouldRefresh(true);
+        dispatch({ type: 'SET_SHOULD_REFRESH', payload: true });
     };
 
     return (
         <div className="App">
             {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
             {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
-            <ReceiptList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
-            <ReceiptItemList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
+            <ReceiptList />
+            <ReceiptItemList />
         </div>
     );
 }
