@@ -39,38 +39,38 @@ function ReceiptForm({ onSubmit }) {
         setItems(newItems);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
-
+    
         let totalSum = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
         if (totalAmount != null && totalSum > totalAmount) {
             // Don't submit if the sum of item prices is more than the total amount provided
             return;
         }
-
+    
         const receipt = { 
             date: date,
             store: store,
             total: totalSum.toFixed(2),
         };
-        
-        // Make a POST request to the Receipt API to create a new receipt
-        axios.post(`/api/receipts/`, receipt)
-            .then(res => {
-                const receiptId = res.data.id;  // get the id of the created receipt
-        
-                // For each item, we add the receipt id and make a POST request to the ReceiptItem API
-                items.filter(item => item.price && item.item_name).forEach(item => {
-                    const receiptItem = { ...item, receipt: receiptId };
-                    axios.post(`/api/receiptitems/`, receiptItem)
-                        .then(res => console.log(res))
-                        .catch(error => console.error(error));
-                });
-        
-                dispatch(setShouldRefresh(true));
-                onSubmit();
-            })
-            .catch(error => console.error(error));
+    
+        try {
+            const res = await axios.post(`/api/receipts/`, receipt)
+            const receiptId = res.data.id;  // get the id of the created receipt
+    
+            // For each item, we add the receipt id and make a POST request to the ReceiptItem API
+            const receiptItemsPromises = items.filter(item => item.price && item.item_name).map(item => {
+                const receiptItem = { ...item, receipt: receiptId };
+                return axios.post(`/api/receiptitems/`, receiptItem);
+            });
+    
+            await Promise.all(receiptItemsPromises);
+    
+            dispatch(setShouldRefresh(true));
+            onSubmit();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
