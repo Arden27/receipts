@@ -13,8 +13,14 @@ function ReceiptItemList() {
     const dispatch = useDispatch();
     
     useEffect(() => {
+        const token = localStorage.getItem('token');
+
         if (shouldRefresh) {
-            axios.get(`/api/receiptitems/`)
+            axios.get(`/api/receiptitems/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
                 .then(res => {
                     const receiptItemData = res.data;
                     setReceiptItems(receiptItemData);

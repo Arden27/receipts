@@ -15,8 +15,14 @@ function ReceiptList() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+
         if (shouldRefresh) {
-            axios.get(`/api/receipts/`)
+            axios.get(`/api/receipts/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
                 .then(res => {
                     const receiptData = res.data;
                     setReceipts(receiptData);
@@ -26,6 +32,8 @@ function ReceiptList() {
     }, [shouldRefresh, dispatch]);
 
     const handleReceiptClick = (receipt) => {
+        const token = localStorage.getItem('token');
+
         if (selectedReceipt && receipt.id === selectedReceipt.id) {
             // If the selected receipt is clicked again, hide the details
             setSelectedReceipt(null);
@@ -33,7 +41,11 @@ function ReceiptList() {
         } else {
             setSelectedReceipt(receipt);
             // Fetch receipt items
-            axios.get(`/api/receiptitems/?receipt=${receipt.id}`)
+            axios.get(`/api/receiptitems/?receipt=${receipt.id}`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
                 .then(res => {
                     setSelectedItems(res.data);
                 });

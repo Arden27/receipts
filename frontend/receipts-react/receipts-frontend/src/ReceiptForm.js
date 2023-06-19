@@ -15,6 +15,8 @@ function ReceiptForm({ onSubmit }) {
 
     const dispatch = useDispatch();
 
+    const token = localStorage.getItem('token');
+
     const addItem = useCallback(() => {
         setItems(items => [...items, { item_name: "", price: "" }]);
     }, []);
@@ -55,13 +57,21 @@ function ReceiptForm({ onSubmit }) {
         };
     
         try {
-            const res = await axios.post(`/api/receipts/`, receipt)
+            const res = await axios.post(`/api/receipts/`, receipt, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            });
             const receiptId = res.data.id;  // get the id of the created receipt
     
             // For each item, we add the receipt id and make a POST request to the ReceiptItem API
             const receiptItemsPromises = items.filter(item => item.price && item.item_name).map(item => {
                 const receiptItem = { ...item, receipt: receiptId };
-                return axios.post(`/api/receiptitems/`, receiptItem);
+                return axios.post(`/api/receiptitems/`, receiptItem, {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                    },
+                });
             });
     
             await Promise.all(receiptItemsPromises);

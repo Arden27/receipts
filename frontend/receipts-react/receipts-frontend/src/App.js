@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import ReceiptForm from './ReceiptForm';
-import ReceiptList from './ReceiptList';
-import ReceiptItemList from './ReceiptItemList';
+import React, { useState, useEffect } from 'react';
+import LoginForm from './LoginForm';
+import RegistrationForm from './RegistrationForm';
+import MainApp from './MainApp';
 
 function App() {
-    const [addingReceipt, setAddingReceipt] = useState(false);
-    const dispatch = useDispatch();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const handleAddReceiptClick = () => {
-        setAddingReceipt(true);
+    // Function to check if user is logged in
+    const checkIsLoggedIn = () => {
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token);
     };
 
-    const handleReceiptSubmit = () => {
-        setAddingReceipt(false);
-        dispatch({ type: 'SET_SHOULD_REFRESH', payload: true });
-    };
+    // Effect to check if user is logged in when the app first loads
+    useEffect(checkIsLoggedIn, []);
 
-    return (
-        <div className="App">
-            {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
-            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
-            <ReceiptList />
-            <ReceiptItemList />
-        </div>
-    );
+    if (!isLoggedIn) {
+        return (
+            <div>
+                <LoginForm onLogin={checkIsLoggedIn} />
+                <RegistrationForm onRegister={checkIsLoggedIn} />
+            </div>
+        );
+    }
+
+    return <MainApp />;
 }
 
 export default App;
