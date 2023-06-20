@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function RegistrationForm({ onRegister }) {
     const [username, setUsername] = useState("");
@@ -10,7 +11,9 @@ function RegistrationForm({ onRegister }) {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            const response = await axios.post(`/dj-rest-auth/registration/`, { username, password1, password2 });
+            let response = await axios.post(`/dj-rest-auth/registration/`, { username, password1, password2 });
+            // if registration was successful, log the user in
+            response = await axios.post(`/dj-rest-auth/login/`, { username, password: password1 });
             localStorage.setItem('token', response.data.key);
             onRegister();  // inform the parent component that the user has registered
         } catch (error) {
@@ -39,6 +42,9 @@ function RegistrationForm({ onRegister }) {
             <input type="password" value={password2} onChange={e => setPassword2(e.target.value)} placeholder="Confirm Password" />
             <button type="submit">Register</button>
             {error && <div>{error}</div>}
+            <div>
+                Already have an account? <Link to="/login">Login</Link>
+            </div>
         </form>
     );
 }

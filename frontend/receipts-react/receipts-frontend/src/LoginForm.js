@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux'; // Import useDispatch
 import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
+import { Link } from 'react-router-dom';
 
 function LoginForm({ onLogin }) {
     const [username, setUsername] = useState("");
@@ -28,6 +29,9 @@ function LoginForm({ onLogin }) {
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
             <button type="submit">Login</button>
             {error && <div>{error}</div>}
+            <div>
+                Don't have an account? <Link to="/register">Register</Link>
+            </div>
         </form>
     );
 }
