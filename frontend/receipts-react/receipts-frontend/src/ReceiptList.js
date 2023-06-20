@@ -15,6 +15,10 @@ function ReceiptList() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch({ type: 'SET_SHOULD_REFRESH', payload: true });
+    }, [dispatch]);
+
+    useEffect(() => {
         const token = localStorage.getItem('token');
 
         if (shouldRefresh) {

@@ -3,13 +3,21 @@ import { useDispatch } from 'react-redux';
 import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
 import ReceiptItemList from './ReceiptItemList';
+import { useNavigate } from "react-router-dom";
 
-function MainApp() {
+function MainApp({ setIsLoggedIn }) {
     const [addingReceipt, setAddingReceipt] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleAddReceiptClick = () => {
         setAddingReceipt(true);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        navigate('/login');
     };
 
     const handleReceiptSubmit = () => {
@@ -20,11 +28,16 @@ function MainApp() {
     return (
         <div className="App">
             {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
-            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
+            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} onLogout={handleLogout} />}
             <ReceiptList />
             <ReceiptItemList />
+            <br/>
+            <br/>
+            <br/>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 }
 
 export default MainApp;
+

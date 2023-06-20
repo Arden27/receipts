@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setShouldRefresh } from './redux/store';
 
-function ReceiptForm({ onSubmit }) {
+function ReceiptForm({ onSubmit, onLogout }) {
     const today = new Date();
     const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
@@ -110,6 +110,7 @@ function ReceiptForm({ onSubmit }) {
             ))}
             {totalAmount == null && <button type="button" onClick={addItem}>Add Another Item</button>}
             <button type="submit">Submit Receipt</button>
+            <button type="button" onClick={onLogout}>Logout</button>
         </form>
     );
     
