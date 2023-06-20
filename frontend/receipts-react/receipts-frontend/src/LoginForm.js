@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux'; // Import useDispatch
+import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
 
 function LoginForm({ onLogin }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+
+    const dispatch = useDispatch();
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -12,6 +16,7 @@ function LoginForm({ onLogin }) {
             const response = await axios.post(`/dj-rest-auth/login/`, { username, password });
             localStorage.setItem('token', response.data.key);
             onLogin();  // inform the parent component that the user has logged in
+            dispatch(setShouldRefresh(true));
         } catch (error) {
             setError("Invalid username or password.");
         }
