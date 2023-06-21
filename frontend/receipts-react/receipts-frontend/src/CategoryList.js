@@ -36,7 +36,7 @@ function CategoryList() {
             <ul>
                 {categories.map(category => (
                     <li key={category.id}>
-                        {category.name}
+                        {category.name} - {category.item_count} items, total price: ${category.total_price.toFixed(2)}
                     </li>
                 ))}
             </ul>
