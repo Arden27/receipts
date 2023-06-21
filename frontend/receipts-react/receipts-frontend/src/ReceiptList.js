@@ -1,8 +1,7 @@
 // ReceiptList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux'; // Import useSelector
-import { useDispatch } from 'react-redux'; // Import useDispatch
+import { useSelector, useDispatch } from 'react-redux'; // Import useSelector and useDispatch
 import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
 
 function ReceiptList() {
@@ -11,6 +10,7 @@ function ReceiptList() {
     const [selectedItems, setSelectedItems] = useState([]);
 
     const shouldRefresh = useSelector(state => state.shouldRefresh); // Use shouldRefresh from Redux
+    const categories = useSelector(state => state.categories); // Use categories from Redux
 
     const dispatch = useDispatch();
 
@@ -25,11 +25,19 @@ function ReceiptList() {
             })
                 .then(res => {
                     const receiptData = res.data;
+                    console.log('fetched data from /api/receipts/ in ReceiptList')
+                    console.log(receiptData);
                     setReceipts(receiptData);
                     dispatch(setShouldRefresh(false)); // Reset the flag
                 });
         }
     }, [shouldRefresh, dispatch]);
+
+    // Find category name by id
+    const findCategoryNameById = (id) => {
+        const category = categories.find(category => category.id === id);
+        return category ? category.name : 'Unknown';
+    };
 
     const handleReceiptClick = (receipt) => {
         const token = localStorage.getItem('token');
@@ -47,6 +55,8 @@ function ReceiptList() {
                 },
             })
                 .then(res => {
+                    console.log('fetched data from /api/receiptitems/?receipt=id in ReceiptList')
+                    console.log(res.data)
                     setSelectedItems(res.data);
                 });
         }
@@ -61,6 +71,7 @@ function ReceiptList() {
                         <div key={index}>
                             <p>Item: {item.item_name}</p>
                             <p>Price: {item.price}</p>
+                            <p>Category: {item.category ? findCategoryNameById(item.category) : 'Unknown'}</p>
                         </div>
                     ))}
                 </div>

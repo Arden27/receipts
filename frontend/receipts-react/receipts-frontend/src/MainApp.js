@@ -4,6 +4,7 @@ import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
 import ReceiptItemList from './ReceiptItemList';
 import { useNavigate } from "react-router-dom";
+import CategoryList from './CategoryList';
 
 function MainApp({ setIsLoggedIn }) {
     const [addingReceipt, setAddingReceipt] = useState(false);
@@ -31,9 +32,7 @@ function MainApp({ setIsLoggedIn }) {
             {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} onLogout={handleLogout} />}
             <ReceiptList />
             <ReceiptItemList />
-            <br/>
-            <br/>
-            <br/>
+            <CategoryList />
             <button onClick={handleLogout}>Logout</button>
         </div>
     );

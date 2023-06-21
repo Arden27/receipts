@@ -11,14 +11,14 @@ function ReceiptForm({ onSubmit, onLogout }) {
     const [store, setStore] = useState("");
     const [date, setDate] = useState(formattedDate);
     const [totalAmount, setTotalAmount] = useState(null);
-    const [items, setItems] = useState([{ item_name: "", price: "" }]);
+    const [items, setItems] = useState([{ item_name: "", price: "", category: "" }]);
 
     const dispatch = useDispatch();
 
     const token = localStorage.getItem('token');
 
     const addItem = useCallback(() => {
-        setItems(items => [...items, { item_name: "", price: "" }]);
+        setItems(items => [...items, { item_name: "", price: "", category: "" }]);
     }, []);
     
     useEffect(() => {
@@ -43,7 +43,14 @@ function ReceiptForm({ onSubmit, onLogout }) {
 
     const handleSubmit = async event => {
         event.preventDefault();
-    
+        
+        const hasItemsWithoutCategory = items.some(item => !item.category);
+        if (hasItemsWithoutCategory) {
+            // You can notify the user about the issue here, for example
+            alert('All items must have a category!');
+            return;
+        }
+
         let totalSum = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
         if (totalAmount != null && totalSum > totalAmount) {
             // Don't submit if the sum of item prices is more than the total amount provided
@@ -65,8 +72,10 @@ function ReceiptForm({ onSubmit, onLogout }) {
             const receiptId = res.data.id;  // get the id of the created receipt
     
             // For each item, we add the receipt id and make a POST request to the ReceiptItem API
-            const receiptItemsPromises = items.filter(item => item.price && item.item_name).map(item => {
-                const receiptItem = { ...item, receipt: receiptId };
+            const receiptItemsPromises = items.filter(item => item.price && item.item_name && item.category).map(item => {
+                const receiptItem = { ...item, receipt: receiptId, category: parseInt(item.category) }; // Ensure category is an integer (category ID)
+                console.log('posted data in ReceiptItemForm:')
+                console.log(receiptItem)
                 return axios.post(`/api/receiptitems/`, receiptItem, {
                     headers: {
                         'Authorization': `Token ${token}`,
