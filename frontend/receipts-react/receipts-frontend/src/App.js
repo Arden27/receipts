@@ -17,7 +17,7 @@ function App() {
     return (
         <Router>
             <Routes>
-            <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginForm onLogin={checkIsLoggedIn} />} />
+                <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginForm onLogin={checkIsLoggedIn} />} />
                 <Route path="/register" element={isLoggedIn ? <Navigate to="/" /> : <RegistrationForm onRegister={checkIsLoggedIn} />} />
                 <Route path="/" element={isLoggedIn ? <MainApp setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />  
             </Routes>
