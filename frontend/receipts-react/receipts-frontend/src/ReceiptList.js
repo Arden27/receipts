@@ -1,35 +1,54 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
-function ReceiptList({ shouldRefresh, setShouldRefresh }) {
+import { setShouldRefresh } from './redux/store';
+
+function ReceiptList() {
     const [receipts, setReceipts] = useState([]);
     const [selectedReceipt, setSelectedReceipt] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
 
-    const resetRefresh = useCallback(() => {
-        setShouldRefresh(false);
-    }, [setShouldRefresh]);
+    const shouldRefresh = useSelector(state => state.shouldRefresh);
+    const categories = useSelector(state => state.categories);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+
         if (shouldRefresh) {
-            axios.get(`/api/receipts/`)
+            axios.get(`/api/receipts/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
                 .then(res => {
                     const receiptData = res.data;
                     setReceipts(receiptData);
-                    resetRefresh();
+                    dispatch(setShouldRefresh(false));
                 });
         }
-    }, [shouldRefresh, resetRefresh]);
+    }, [shouldRefresh, dispatch]);
+
+    const findCategoryNameById = (id) => {
+        const category = categories.find(category => category.id === id);
+        return category ? category.name : 'Unknown';
+    };
 
     const handleReceiptClick = (receipt) => {
+        const token = localStorage.getItem('token');
+
         if (selectedReceipt && receipt.id === selectedReceipt.id) {
-            // If the selected receipt is clicked again, hide the details
             setSelectedReceipt(null);
             setSelectedItems([]);
         } else {
             setSelectedReceipt(receipt);
-            // Fetch receipt items
-            axios.get(`/api/receiptitems/?receipt=${receipt.id}`)
+            axios.get(`/api/receiptitems/?receipt=${receipt.id}`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
                 .then(res => {
                     setSelectedItems(res.data);
                 });
@@ -37,19 +56,50 @@ function ReceiptList({ shouldRefresh, setShouldRefresh }) {
     }
 
     return (
-        <div>
-            {receipts.map((receipt) => (
-                <div key={receipt.id}>
-                    <p onClick={() => handleReceiptClick(receipt)}>{new Date(receipt.date).toLocaleDateString()} - {receipt.store} - {receipt.total}</p>
-                    {selectedReceipt && selectedReceipt.id === receipt.id && selectedItems.map((item, index) => (
-                        <div key={index}>
-                            <p>Item: {item.item_name}</p>
-                            <p>Price: {item.price}</p>
-                        </div>
-                    ))}
-                </div>
-            ))}
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Store</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {receipts.map((receipt, index) => (
+                    <>
+                        <tr key={receipt.id} onClick={() => handleReceiptClick(receipt)}>
+                            <td>{new Date(receipt.date).toLocaleDateString()}</td>
+                            <td>{receipt.store}</td>
+                            <td>{receipt.total}</td>
+                        </tr>
+                        {selectedReceipt && selectedReceipt.id === receipt.id &&
+                            <tr>
+                                <td colSpan="3">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Price</th>
+                                                <th>Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {selectedItems.map((item, index) => (
+                                                <tr key={index}>
+                                                    <td>{item.item_name}</td>
+                                                    <td>{item.price}</td>
+                                                    <td>{item.category ? findCategoryNameById(item.category) : 'Unknown'}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                    </>
+                ))}
+            </tbody>
+        </table>
     );
 }
 

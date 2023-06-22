@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReceiptItemForm from './ReceiptItemForm';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setShouldRefresh } from './redux/store';
 
 function ReceiptForm({ onSubmit }) {
     const today = new Date();
@@ -9,10 +11,14 @@ function ReceiptForm({ onSubmit }) {
     const [store, setStore] = useState("");
     const [date, setDate] = useState(formattedDate);
     const [totalAmount, setTotalAmount] = useState(null);
-    const [items, setItems] = useState([{ item_name: "", price: "" }]);
+    const [items, setItems] = useState([{ item_name: "", price: "", category: "" }]);
+
+    const dispatch = useDispatch();
+
+    const token = localStorage.getItem('token');
 
     const addItem = useCallback(() => {
-        setItems(items => [...items, { item_name: "", price: "" }]);
+        setItems(items => [...items, { item_name: "", price: "", category: "" }]);
     }, []);
     
     useEffect(() => {
@@ -35,40 +41,55 @@ function ReceiptForm({ onSubmit }) {
         setItems(newItems);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
+        
+        const hasItemsWithoutCategory = items.some(item => !item.category);
+        if (hasItemsWithoutCategory) {
+            // You can notify the user about the issue here, for example
+            alert('All items must have a category!');
+            return;
+        }
 
         let totalSum = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
         if (totalAmount != null && totalSum > totalAmount) {
             // Don't submit if the sum of item prices is more than the total amount provided
             return;
         }
-
+    
         const receipt = { 
             date: date,
             store: store,
             total: totalSum.toFixed(2),
         };
-        
-        // Make a POST request to the Receipt API to create a new receipt
-        axios.post(`/api/receipts/`, receipt)
-            .then(res => {
-                const receiptId = res.data.id;  // get the id of the created receipt
-        
-                // For each item, we add the receipt id and make a POST request to the ReceiptItem API
-                items.filter(item => item.price && item.item_name).forEach(item => {
-                    const receiptItem = { ...item, receipt: receiptId };
-                    axios.post(`/api/receiptitems/`, receiptItem)
-                        .then(res => console.log(res))
-                        .catch(error => console.error(error));
+    
+        try {
+            const res = await axios.post(`/api/receipts/`, receipt, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            });
+            const receiptId = res.data.id;  // get the id of the created receipt
+    
+            // For each item, we add the receipt id and make a POST request to the ReceiptItem API
+            const receiptItemsPromises = items.filter(item => item.price && item.item_name && item.category).map(item => {
+                const receiptItem = { ...item, receipt: receiptId, category: parseInt(item.category) }; // Ensure category is an integer (category ID)
+                console.log('posted data in ReceiptItemForm:')
+                console.log(receiptItem)
+                return axios.post(`/api/receiptitems/`, receiptItem, {
+                    headers: {
+                        'Authorization': `Token ${token}`,
+                    },
                 });
-        
-                // Call the callback function passed from the parent component
-                if (onSubmit) {
-                    onSubmit();
-                }
-            })
-            .catch(error => console.error(error));
+            });
+    
+            await Promise.all(receiptItemsPromises);
+    
+            dispatch(setShouldRefresh(true));
+            onSubmit();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
