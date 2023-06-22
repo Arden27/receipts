@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ReceiptForm from './ReceiptForm';
+import ReceiptList from './ReceiptList';
+import ReceiptItemList from './ReceiptItemList';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [addingReceipt, setAddingReceipt] = useState(false);
+    const [shouldRefresh, setShouldRefresh] = useState(true);
+
+    const handleAddReceiptClick = () => {
+        setAddingReceipt(true);
+    };
+
+    const handleReceiptSubmit = () => {
+        setAddingReceipt(false);
+        setShouldRefresh(true);
+    };
+
+    return (
+        <div className="App">
+            {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
+            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
+            <ReceiptList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
+            <ReceiptItemList shouldRefresh={shouldRefresh} setShouldRefresh={setShouldRefresh} />
+        </div>
+    );
 }
 
 export default App;
