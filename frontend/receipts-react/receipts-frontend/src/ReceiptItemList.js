@@ -1,14 +1,14 @@
-// ReceiptItemList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux'; // Import useSelector
-import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setShouldRefresh } from './redux/store';
 
 function ReceiptItemList() {
     const [receiptItems, setReceiptItems] = useState([]);
 
-    const shouldRefresh = useSelector(state => state.shouldRefresh); // Use shouldRefresh from Redux
-    const categories = useSelector(state => state.categories); // Use categories from Redux
+    const shouldRefresh = useSelector(state => state.shouldRefresh);
+    const categories = useSelector(state => state.categories);
 
     const dispatch = useDispatch();
 
@@ -23,28 +23,36 @@ function ReceiptItemList() {
             })
                 .then(res => {
                     const receiptItemData = res.data;
-                    console.log('fetched data from /api/receiptitems/ in ReceiptItemList')
-                    console.log(receiptItemData);
                     setReceiptItems(receiptItemData);
-                    dispatch(setShouldRefresh(false)); // Reset the flag
+                    dispatch(setShouldRefresh(false));
                 });
         }
     }, [shouldRefresh, dispatch]);
 
-    // Find category name by id
     const findCategoryNameById = (id) => {
         const category = categories.find(category => category.id === id);
         return category ? category.name : 'Unknown';
     };
 
     return (
-        <ul>
-            {receiptItems.map(item => (
-                <li key={item.id}>
-                    {item.item_name} - {item.price} - {item.category ? findCategoryNameById(item.category) : 'Unknown'}
-                </li>
-            ))}
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {receiptItems.map(item => (
+                    <tr key={item.id}>
+                        <td>{item.item_name}</td>
+                        <td>{item.price}</td>
+                        <td>{item.category ? findCategoryNameById(item.category) : 'Unknown'}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     );
 }
 

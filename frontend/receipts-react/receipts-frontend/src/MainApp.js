@@ -29,7 +29,7 @@ function MainApp({ setIsLoggedIn }) {
     return (
         <div className="App">
             {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
-            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} onLogout={handleLogout} />}
+            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
             <ReceiptList />
             <ReceiptItemList />
             <CategoryList />
