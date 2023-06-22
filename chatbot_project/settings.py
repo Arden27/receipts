@@ -79,7 +79,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            FRONTEND_DIR / "build",
+            FRONTEND_DIR / "react/receipts-frontend/build",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -150,7 +150,7 @@ REACT_STATIC = '/react_static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    FRONTEND_DIR / "build/static",
+    FRONTEND_DIR / "react/receipts-frontend/build/static",
 ]
 
 MEDIA_URL = '/media/'
