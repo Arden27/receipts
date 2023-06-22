@@ -3,6 +3,9 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import ReceiptItem, Receipt, Category
 from .serializers import ReceiptItemSerializer, ReceiptSerializer, CategorySerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db.models import Sum
 
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
@@ -35,3 +38,10 @@ class ReceiptViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class ReceiptItemTotalPriceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        total_price = ReceiptItem.objects.filter(receipt__user=request.user).aggregate(Sum('price'))['price__sum']
+        return Response({'total_price': total_price if total_price is not None else 0})

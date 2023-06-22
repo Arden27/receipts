@@ -3,17 +3,17 @@ from .models import ReceiptItem, Receipt, Category
 from django.db.models import Count, Sum
 
 class CategorySerializer(serializers.ModelSerializer):
-    item_count = serializers.SerializerMethodField()
-    total_price = serializers.SerializerMethodField()
+    category_item_count = serializers.SerializerMethodField()
+    total_category_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ('id', 'name', 'item_count', 'total_price')
+        fields = ('id', 'name', 'category_item_count', 'total_category_price')
 
-    def get_item_count(self, obj):
+    def get_category_item_count(self, obj):
         return ReceiptItem.objects.filter(category=obj).count()
 
-    def get_total_price(self, obj):
+    def get_total_category_price(self, obj):
         total = ReceiptItem.objects.filter(category=obj).aggregate(Sum('price'))['price__sum']
         return total if total is not None else 0
 
