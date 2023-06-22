@@ -7,6 +7,10 @@ import { setShouldRefresh } from './redux/store';
 function ReceiptItemList() {
     const [receiptItems, setReceiptItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [totalPriceCurrentMonth, setTotalPriceCurrentMonth] = useState(0);
+    const [totalPriceLastMonth, setTotalPriceLastMonth] = useState(0);
+    const [totalPriceForOneMonth, setTotalPriceForOneMonth] = useState(0);
+    const [totalPriceSameDayLastMonth, setTotalPriceSameDayLastMonth] = useState(0);
 
     const shouldRefresh = useSelector(state => state.shouldRefresh);
     const categories = useSelector(state => state.categories);
@@ -37,6 +41,46 @@ function ReceiptItemList() {
                 .then(res => {
                     setTotalPrice(res.data.total_price);
                 });
+
+            // Fetch total price for current month
+            axios.get(`/api/receiptitemstotalpricecurrentmonth/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
+                .then(res => {
+                    setTotalPriceCurrentMonth(res.data.total_price);
+                });
+
+            // Fetch total price for last month
+            axios.get(`/api/receiptitemstotalpricelastmonth/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
+                .then(res => {
+                    setTotalPriceLastMonth(res.data.total_price);
+                });
+
+            // Fetch total price for one month
+            axios.get(`/api/receiptitemstotalpriceforonemonth/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
+                .then(res => {
+                    setTotalPriceForOneMonth(res.data.total_price);
+                });
+
+            // Fetch total price from same day last month till today
+            axios.get(`/api/receiptitemstotalpricesamedaylastmonth/`, {
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            })
+                .then(res => {
+                    setTotalPriceSameDayLastMonth(res.data.total_price);
+                });
         }
     }, [shouldRefresh, dispatch]);
 
@@ -65,7 +109,11 @@ function ReceiptItemList() {
                     ))}
                 </tbody>
             </table>
-            <div>Total Price: {totalPrice}</div> {/* Display total price */}
+            <div>Total Price: {totalPrice}</div>
+            <div>Total Price Current Month: {totalPriceCurrentMonth}</div>
+            <div>Total Price Last Month: {totalPriceLastMonth}</div>
+            <div>Total Price for One Month: {totalPriceForOneMonth}</div>
+            <div>Total Price from Same Day Last Month Till Today: {totalPriceSameDayLastMonth}</div>
         </div>
     );
 }
