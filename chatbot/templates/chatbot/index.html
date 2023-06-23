@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Chatbot</title>
-    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'chatbot/img/favicon.ico' %}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <link href="{% static 'css/chatbot.css' %}" rel="stylesheet">
+    <link href="{% static 'chatbot/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'chatbot/css/chatbot.css' %}" rel="stylesheet">
 </head>
 <body>
     <div class="navbar">
@@ -20,7 +20,7 @@
 
     <section id="home-section" class="section">
         <div class="about-content">
-            <img src="{% static 'img/profile_picture.png' %}" alt="Profile Picture" id="profile-picture">
+            <img src="{% static 'chatbot/img/profile_picture.png' %}" alt="Profile Picture" id="profile-picture">
             <div class="details">
                 <div class="hello">
                     <div class="orangeText">Hello, I'm</div>
@@ -50,27 +50,27 @@
                 <h3>Frontend</h3>
                 <div class="skills">
                     <div class="skill">
-                        <img src="{% static 'img/skills/html.png' %}" alt="HTML icon">
+                        <img src="{% static 'chatbot/img/skills/html.png' %}" alt="HTML icon">
                         <p>HTML</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/css.png' %}" alt="css icon">
+                        <img src="{% static 'chatbot/img/skills/css.png' %}" alt="css icon">
                         <p>CSS</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/js.png' %}" alt="js icon">
+                        <img src="{% static 'chatbot/img/skills/js.png' %}" alt="js icon">
                         <p>JavaScript</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/react.png' %}" alt="react icon">
+                        <img src="{% static 'chatbot/img/skills/react.png' %}" alt="react icon">
                         <p>React.js</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/tailwind.png' %}" alt="Tailwind icon">
+                        <img src="{% static 'chatbot/img/skills/tailwind.png' %}" alt="Tailwind icon">
                         <p>Tailwind</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/kivy.png' %}" alt="Kivy icon">
+                        <img src="{% static 'chatbot/img/skills/kivy.png' %}" alt="Kivy icon">
                         <p>Kivy</p>
                     </div>
                 </div>
@@ -79,27 +79,27 @@
                 <h3>Backend</h3>
                 <div class="skills">
                     <div class="skill">
-                        <img src="{% static 'img/skills/python.png' %}" alt="Python icon">
+                        <img src="{% static 'chatbot/img/skills/python.png' %}" alt="Python icon">
                         <p>Python</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/django.png' %}" alt="Django icon">
+                        <img src="{% static 'chatbot/img/skills/django.png' %}" alt="Django icon">
                         <p>Django</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/pytorch.png' %}" alt="PyTorch icon">
+                        <img src="{% static 'chatbot/img/skills/pytorch.png' %}" alt="PyTorch icon">
                         <p>PyTorch</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/mongodb.png' %}" alt="MongoDB icon">
+                        <img src="{% static 'chatbot/img/skills/mongodb.png' %}" alt="MongoDB icon">
                         <p>MongoDB</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/mysql.png' %}" alt="MySQL icon">
+                        <img src="{% static 'chatbot/img/skills/mysql.png' %}" alt="MySQL icon">
                         <p>MySQL</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/solidity.png' %}" alt="Solidity icon">
+                        <img src="{% static 'chatbot/img/skills/solidity.png' %}" alt="Solidity icon">
                         <p>Solidity</p>
                     </div>
                 </div>
@@ -110,15 +110,15 @@
                 <h3>Tools</h3>
                 <div class="skills">
                     <div class="skill">
-                        <img src="{% static 'img/skills/git.png' %}" alt="Git icon">
+                        <img src="{% static 'chatbot/img/skills/git.png' %}" alt="Git icon">
                         <p>Git</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/vscode.png' %}" alt="VSCode icon">
+                        <img src="{% static 'chatbot/img/skills/vscode.png' %}" alt="VSCode icon">
                         <p>VSCode</p>
                     </div>
                     <div class="skill">
-                        <img src="{% static 'img/skills/linux.png' %}" alt="Linux icon">
+                        <img src="{% static 'chatbot/img/skills/linux.png' %}" alt="Linux icon">
                         <p>Linux</p>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
     <section id="about-section" class="section">
         <h2 class="section-heading">About me</h2>
         <div class="about-container">
-            <img src="{% static 'img/about.jpeg' %}" alt="About Picture" id="about-picture">
+            <img src="{% static 'chatbot/img/about.jpeg' %}" alt="About Picture" id="about-picture">
             <div class="about">
                 <h3>About</h4>
                 <h4>fagdzfsdfvsdzsfadzvezrsffvzs</h4>
@@ -174,7 +174,7 @@
         </div>
     </div>
     <button id="chat-button">Chat</button>
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/chatbot.js' %}"></script>
+    <script src="{% static 'chatbot/js/main.js' %}"></script>
+    <script src="{% static 'chatbot/js/chatbot.js' %}"></script>
 </body>
 </html>
