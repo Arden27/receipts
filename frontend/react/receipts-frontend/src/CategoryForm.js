@@ -17,7 +17,7 @@ function CategoryForm() {
             return;
         }
         try {
-            await axios.post(`/api/categories/`, { name: categoryName }, {
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/categories/`, { name: categoryName }, {
                 headers: {
                     'Authorization': `Token ${token}`,
                 },

@@ -14,7 +14,7 @@ function LoginForm({ onLogin }) {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            const response = await axios.post(`/dj-rest-auth/login/`, { username, password });
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/dj-rest-auth/login/`, { username, password });
             localStorage.setItem('token', response.data.key);
             onLogin();  // inform the parent component that the user has logged in
             dispatch(setShouldRefresh(true));

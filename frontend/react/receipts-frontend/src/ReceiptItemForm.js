@@ -12,7 +12,7 @@ function ReceiptItemForm({ item, onItemChange }) {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get(`/api/categories/`, {
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/categories/`, {
                     headers: {
                         'Authorization': `Token ${token}`,
                     },

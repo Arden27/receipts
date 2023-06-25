@@ -11,9 +11,9 @@ function RegistrationForm({ onRegister }) {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            let response = await axios.post(`/dj-rest-auth/registration/`, { username, password1, password2 });
+            let response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/dj-rest-auth/registration/`, { username, password1, password2 });
             // if registration was successful, log the user in
-            response = await axios.post(`/dj-rest-auth/login/`, { username, password: password1 });
+            response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/dj-rest-auth/login/`, { username, password: password1 });
             localStorage.setItem('token', response.data.key);
             onRegister();  // inform the parent component that the user has registered
         } catch (error) {

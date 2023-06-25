@@ -64,7 +64,7 @@ function ReceiptForm({ onSubmit }) {
         };
     
         try {
-            const res = await axios.post(`/api/receipts/`, receipt, {
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/receipts/`, receipt, {
                 headers: {
                     'Authorization': `Token ${token}`,
                 },
@@ -76,7 +76,7 @@ function ReceiptForm({ onSubmit }) {
                 const receiptItem = { ...item, receipt: receiptId, category: parseInt(item.category) }; // Ensure category is an integer (category ID)
                 console.log('posted data in ReceiptItemForm:')
                 console.log(receiptItem)
-                return axios.post(`/api/receiptitems/`, receiptItem, {
+                return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/receiptitems/`, receiptItem, {
                     headers: {
                         'Authorization': `Token ${token}`,
                     },

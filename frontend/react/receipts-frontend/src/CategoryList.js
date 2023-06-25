@@ -12,7 +12,7 @@ function CategoryList() {
 
     const fetchCategories = useCallback(async () => {
         try {
-            const response = await axios.get(`/api/categories/`, {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/categories/`, {
                 headers: {
                     'Authorization': `Token ${token}`,
                 },
@@ -32,14 +32,25 @@ function CategoryList() {
 
     return (
         <div>
-            <h2>Categories</h2>
-            <ul>
-                {categories.map(category => (
-                    <li key={category.id}>
-                        {category.name} - {category.category_item_count} items, total price: ${category.total_category_price.toFixed(2)}
-                    </li>
-                ))}
-            </ul>
+            <h2>Category</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categories && categories.length > 0 && categories.map(category => (
+                        <tr key={category.id}>
+                            <td>{category.name}</td>
+                            <td>{category.category_item_count}</td>
+                            <td>{category.total_category_price}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
             <CategoryForm />
         </div>
     );
