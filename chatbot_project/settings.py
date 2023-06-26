@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "True"#os.environ.get("DJANGO_DEBUG") == "True"
+DEBUG = os.getenv("DJANGO_DEBUG") == "True"
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
 
@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'chatbot_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv("DB_ENGINE"),
-        'NAME': BASE_DIR / os.getenv("DB_NAME"),
+        'NAME': os.getenv("DB_NAME"),
         'USER': os.getenv("DB_USER", ""),
         'PASSWORD': os.getenv("DB_PASSWORD", ""),
         'HOST': os.getenv("DB_HOST", ""),
