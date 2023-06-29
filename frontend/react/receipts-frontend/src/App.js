@@ -13,9 +13,9 @@ function App() {
     };
 
     useEffect(checkIsLoggedIn, []);
-
+    const basename = process.env.NODE_ENV === 'production' ? '/receiptapp/' : '/';
     return (
-        <Router>
+        <Router basename={basename}>
             <Routes>
                 <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginForm onLogin={checkIsLoggedIn} />} />
                 <Route path="/register" element={isLoggedIn ? <Navigate to="/" /> : <RegistrationForm onRegister={checkIsLoggedIn} />} />
