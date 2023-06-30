@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
+    #'django.contrib.sites',
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'receipts',
 ]
 
-SITE_ID = 1
+#SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
