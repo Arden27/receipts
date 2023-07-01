@@ -1,5 +1,6 @@
 // api.js
 import axios from 'axios';
+import store, { setAuthError, resetStore } from './redux/store';
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -19,6 +20,19 @@ API.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Handle 401 and 403 errors
+API.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      localStorage.removeItem('token');
+      store.dispatch(resetStore());
+      store.dispatch(setAuthError(true)); // dispatch an action to set the error flag
+    }
+    return Promise.reject(error);
+  }
+);
 
 // login
 

@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
 import ReceiptItemList from './ReceiptItemList';
 import { useNavigate } from "react-router-dom";
 import CategoryList from './CategoryList';
 import Totals from './Totals';
-import { resetStore } from './redux/store';
+import { resetStore, setAuthError } from './redux/store';
 import { logoutUser } from './api';
 
 function MainApp({ setIsLoggedIn }) {
     const [addingReceipt, setAddingReceipt] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const isAuthError = useSelector(state => state.isAuthError);
+
+    useEffect(() => {
+        if (isAuthError) {
+            setIsLoggedIn(false);
+            navigate('/login');
+            dispatch(setAuthError(false));
+        }
+    }, [isAuthError, setIsLoggedIn, navigate, dispatch]);
 
     const handleAddReceiptClick = () => {
         setAddingReceipt(true);
