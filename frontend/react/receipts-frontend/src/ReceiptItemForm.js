@@ -1,25 +1,18 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import { fetchCategories } from './api';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShouldRefresh, setCategories } from './redux/store';
 
 function ReceiptItemForm({ item, onItemChange }) {
     const categories = useSelector(state => state.categories); // Use categories from Redux
     const shouldRefresh = useSelector(state => state.shouldRefresh); // Use shouldRefresh from Redux
-    const token = localStorage.getItem('token');
     const dispatch = useDispatch(); // Use useDispatch
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const retrieveCategories = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/categories/`, {
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                    },
-                });
-                console.log('fetched data in ReceiptItemForm')
-                console.log(response.data)
-                dispatch(setCategories(response.data)); // Dispatch setCategories action
+                const response = await fetchCategories();
+                dispatch(setCategories(response)); // Dispatch setCategories action
                 dispatch(setShouldRefresh(false)); // Set shouldRefresh to false after categories are fetched
             } catch (error) {
                 console.error(error);
@@ -27,9 +20,9 @@ function ReceiptItemForm({ item, onItemChange }) {
         };
 
         if (shouldRefresh) {
-            fetchCategories();
+            retrieveCategories();
         }
-    }, [token, dispatch, shouldRefresh]); // Add dispatch and shouldRefresh to dependency array
+    }, [dispatch, shouldRefresh]); // Add dispatch and shouldRefresh to dependency array
 
     const handleChange = (event) => {
         const updatedItem = {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchReceiptItems } from './api';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setShouldRefresh } from './redux/store';
@@ -11,19 +11,12 @@ function ReceiptItemList() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-    
         const fetchData = async () => {
             if (shouldRefresh) {
                 try {
-                    const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/receiptitems/`, {
-                        headers: {
-                            'Authorization': `Token ${token}`,
-                        },
-                    });
-                    setReceiptItems(response.data);
+                    const response = await fetchReceiptItems();
+                    setReceiptItems(response);
                     dispatch(setShouldRefresh(false));
-    
                 } catch (error) {
                     console.error(error);
                 }
@@ -32,7 +25,18 @@ function ReceiptItemList() {
     
         fetchData();
     }, [shouldRefresh, dispatch]);
-
+/*
+    useEffect(() => {
+        const fetchData = async () => {
+            if (shouldRefresh) {
+                const response = await fetchReceiptItems();
+                setReceiptItems(response);
+                dispatch(setShouldRefresh(false));
+            }
+        };
+        fetchData();
+    }, [shouldRefresh, dispatch]);
+*/
     const findCategoryNameById = (id) => {
         if (categories && Array.isArray(categories)) {
             const category = categories.find(category => category.id === id);

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { createCategory } from './api';
 import { useDispatch } from 'react-redux'; // Import useDispatch
 import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
 
 function CategoryForm() {
     const [categoryName, setCategoryName] = useState('');
     const [warning, setWarning] = useState(""); // Add warning state
-    const token = localStorage.getItem('token');
     const dispatch = useDispatch(); // Use useDispatch
 
     const handleSubmit = async event => {
@@ -17,11 +16,7 @@ function CategoryForm() {
             return;
         }
         try {
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/categories/`, { name: categoryName }, {
-                headers: {
-                    'Authorization': `Token ${token}`,
-                },
-            });
+            await createCategory(categoryName);
             setCategoryName('');
             setWarning('')
             dispatch(setShouldRefresh(true)); // Set shouldRefresh to true after a new category is added

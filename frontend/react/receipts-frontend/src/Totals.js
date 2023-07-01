@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchTotalPrices } from './api';
 import { useSelector } from 'react-redux';
 
 function Totals() {
@@ -12,21 +12,15 @@ function Totals() {
     const shouldRefresh = useSelector(state => state.shouldRefresh);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/totalprices/`, {
-                    headers: {
-                        'Authorization': `Token ${token}`,
-                    },
-                });
+                const response = await fetchTotalPrices();
 
-                setTotalPrice(response.data.total_price);
-                setTotalPriceCurrentMonth(response.data.total_price_current_month);
-                setTotalPriceLastMonth(response.data.total_price_last_month);
-                setTotalPriceForOneMonth(response.data.total_price_for_one_month);
-                setTotalPriceSameDayLastMonth(response.data.total_price_same_day_last_month);
+                setTotalPrice(response.total_price);
+                setTotalPriceCurrentMonth(response.total_price_current_month);
+                setTotalPriceLastMonth(response.total_price_last_month);
+                setTotalPriceForOneMonth(response.total_price_for_one_month);
+                setTotalPriceSameDayLastMonth(response.total_price_same_day_last_month);
 
             } catch (error) {
                 console.error(error);

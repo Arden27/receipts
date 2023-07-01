@@ -6,6 +6,8 @@ import ReceiptItemList from './ReceiptItemList';
 import { useNavigate } from "react-router-dom";
 import CategoryList from './CategoryList';
 import Totals from './Totals';
+import { resetStore } from './redux/store';
+import { logoutUser } from './api';
 
 function MainApp({ setIsLoggedIn }) {
     const [addingReceipt, setAddingReceipt] = useState(false);
@@ -16,10 +18,17 @@ function MainApp({ setIsLoggedIn }) {
         setAddingReceipt(true);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        navigate('/login');
+    const handleLogout = async () => {
+        try {
+            await logoutUser();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            localStorage.removeItem('token');
+            dispatch(resetStore());
+            setIsLoggedIn(false);
+            navigate('/login');
+        }
     };
 
     const handleReceiptSubmit = () => {

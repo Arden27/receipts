@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { loginUser } from './api';
 import { useDispatch } from 'react-redux'; // Import useDispatch
 import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ function LoginForm({ onLogin }) {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/dj-rest-auth/login/`, { username, password });
+            const response = await loginUser(username, password);
             localStorage.setItem('token', response.data.key);
             onLogin();  // inform the parent component that the user has logged in
             dispatch(setShouldRefresh(true));

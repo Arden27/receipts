@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchReceipts, fetchReceiptItemsById } from './api';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setShouldRefresh } from './redux/store';
@@ -15,23 +15,19 @@ function ReceiptList() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-
-        if (shouldRefresh) {
-            axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/receipts/`, {
-                headers: {
-                    'Authorization': `Token ${token}`,
-                },
-            })
-            .then(res => {
-                const receiptData = res.data;
-                setReceipts(receiptData);
-                dispatch(setShouldRefresh(false));
-            })
-            .catch(err => {
-                console.error(err);
-            });
-        }
+        const fetchData = async () => {
+            if (shouldRefresh) {
+                try {
+                    const data = await fetchReceipts();
+                    setReceipts(data);
+                    dispatch(setShouldRefresh(false));
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        };
+    
+        fetchData();
     }, [shouldRefresh, dispatch]);
 
     const findCategoryNameById = (id) => {
@@ -39,24 +35,20 @@ function ReceiptList() {
         return category ? category.name : 'Unknown';
     };
 
-    const handleReceiptClick = (receipt) => {
-        const token = localStorage.getItem('token');
-
+    const handleReceiptClick = async (receipt) => {
         if (selectedReceipt && receipt.id === selectedReceipt.id) {
             setSelectedReceipt(null);
             setSelectedItems([]);
         } else {
             setSelectedReceipt(receipt);
-            axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/receiptitems/?receipt=${receipt.id}`, {
-                headers: {
-                    'Authorization': `Token ${token}`,
-                },
-            })
-                .then(res => {
-                    setSelectedItems(res.data);
-                });
+            try {
+                const data = await fetchReceiptItemsById(receipt.id);
+                setSelectedItems(data);
+            } catch (error) {
+                console.error(error);
+            }
         }
-    }
+    };
 
     return (
         <div>
