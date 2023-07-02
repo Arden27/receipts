@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchTotalPrices } from './api';
+import { fetchTotalPrices } from '../api';
 import { useSelector } from 'react-redux';
 
 function Totals() {

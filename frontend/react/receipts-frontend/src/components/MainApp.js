@@ -6,8 +6,8 @@ import ReceiptItemList from './ReceiptItemList';
 import { useNavigate } from "react-router-dom";
 import CategoryList from './CategoryList';
 import Totals from './Totals';
-import { resetStore, setAuthError } from './redux/store';
-import { logoutUser } from './api';
+import { resetStore, setAuthError } from '../redux/store';
+import { logoutUser } from '../api';
 
 function MainApp({ setIsLoggedIn }) {
     const [addingReceipt, setAddingReceipt] = useState(false);

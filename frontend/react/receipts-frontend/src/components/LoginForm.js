@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { loginUser } from './api';
+import { loginUser } from '../api';
 import { useDispatch } from 'react-redux'; // Import useDispatch
-import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
+import { setShouldRefresh } from '../redux/store'; // Import setShouldRefresh
 import { Link } from 'react-router-dom';
 
 function LoginForm({ onLogin }) {

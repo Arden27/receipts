@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { registerUser, loginUser } from './api';
+import { registerUser, loginUser } from '../api';
 import { Link } from 'react-router-dom';
 
 function RegistrationForm({ onRegister }) {

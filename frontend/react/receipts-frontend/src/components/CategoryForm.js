@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createCategory } from './api';
+import { createCategory } from '../api';
 import { useDispatch } from 'react-redux'; // Import useDispatch
-import { setShouldRefresh } from './redux/store'; // Import setShouldRefresh
+import { setShouldRefresh } from '../redux/store'; // Import setShouldRefresh
 
 function CategoryForm() {
     const [categoryName, setCategoryName] = useState('');

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReceiptItemForm from './ReceiptItemForm';
-import { createReceipt, createReceiptItem } from './api';
+import { createReceipt, createReceiptItem } from '../api';
 import { useDispatch } from 'react-redux';
-import { setShouldRefresh } from './redux/store';
+import { setShouldRefresh } from '../redux/store';
 
 function ReceiptForm({ onSubmit }) {
     const today = new Date();

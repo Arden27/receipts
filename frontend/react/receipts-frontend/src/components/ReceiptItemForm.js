@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { fetchCategories } from './api';
+import { fetchCategories } from '../api';
 import { useSelector, useDispatch } from 'react-redux';
-import { setShouldRefresh, setCategories } from './redux/store';
+import { setShouldRefresh, setCategories } from '../redux/store';
 
 function ReceiptItemForm({ item, onItemChange }) {
     const categories = useSelector(state => state.categories); // Use categories from Redux

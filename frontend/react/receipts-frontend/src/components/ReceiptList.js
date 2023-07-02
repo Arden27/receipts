@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchReceipts, fetchReceiptItemsById } from './api';
+import { fetchReceipts, fetchReceiptItemsById } from '../api';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ReceiptList() {

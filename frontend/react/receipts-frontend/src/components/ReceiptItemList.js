@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { fetchReceiptItems } from './api';
+import { fetchReceiptItems } from '../api';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setShouldRefresh } from './redux/store';
+import { setShouldRefresh } from '../redux/store';
 
 function ReceiptItemList() {
     const [receiptItems, setReceiptItems] = useState([]);

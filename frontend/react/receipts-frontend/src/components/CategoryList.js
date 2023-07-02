@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
-import { fetchCategories } from './api';
+import { fetchCategories } from '../api';
 import { useDispatch, useSelector } from 'react-redux'; // Import useSelector
-import { setCategories, setShouldRefresh } from './redux/store'; // Import setShouldRefresh
+import { setCategories, setShouldRefresh } from '../redux/store'; // Import setShouldRefresh
 import CategoryForm from './CategoryForm';
 
 function CategoryList() {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginForm from './LoginForm';
-import RegistrationForm from './RegistrationForm';
-import MainApp from './MainApp';
+import LoginForm from './components/LoginForm';
+import RegistrationForm from './components/RegistrationForm';
+import MainApp from './components/MainApp';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
