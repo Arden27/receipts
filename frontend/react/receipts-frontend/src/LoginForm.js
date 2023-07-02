@@ -15,7 +15,7 @@ function LoginForm({ onLogin }) {
         event.preventDefault();
         try {
             const response = await loginUser(username, password);
-            localStorage.setItem('token', response.data.key);
+            localStorage.setItem('token', response.key);
             onLogin();  // inform the parent component that the user has logged in
             dispatch(setShouldRefresh(true));
         } catch (error) {

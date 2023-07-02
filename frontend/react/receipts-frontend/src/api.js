@@ -42,8 +42,8 @@ export const registerUser = async (username, password1, password2) => {
 };
 
 export const loginUser = async (username, password) => {
-  const response = await API.post(`/dj-rest-auth/login/`, { username, password });
-  return response;
+  const { data } = await API.post(`/dj-rest-auth/login/`, { username, password });
+  return data;
 };
 
 export const logoutUser = async () => {

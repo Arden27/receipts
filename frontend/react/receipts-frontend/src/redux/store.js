@@ -6,7 +6,7 @@ export const resetStore = () => ({ type: 'RESET_STORE' });
 export const setAuthError = payload => ({ type: 'SET_AUTH_ERROR', payload });
 
 const initialState = {
-    shouldRefresh: true,
+    shouldRefresh: false,
     categories: [],
     isAuthError: false,
 };

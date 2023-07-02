@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchReceipts, fetchReceiptItemsById } from './api';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setShouldRefresh } from './redux/store';
-
 function ReceiptList() {
     const [receipts, setReceipts] = useState([]);
     const [selectedReceipt, setSelectedReceipt] = useState(null);
@@ -20,7 +18,6 @@ function ReceiptList() {
                 try {
                     const data = await fetchReceipts();
                     setReceipts(data);
-                    dispatch(setShouldRefresh(false));
                 } catch (error) {
                     console.error(error);
                 }
