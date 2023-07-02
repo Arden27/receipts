@@ -25,12 +25,12 @@ function ReceiptForm({ onSubmit }) {
     
         if (totalAmount != null && totalSum < totalAmount && lastItem.price !== "") {
             const timer = setTimeout(addItem, 750);
-            
             return () => clearTimeout(timer);
-        } else if (totalAmount != null && totalSum >= totalAmount && lastItem.price === "" && items.length > 1) {
+        } else if (totalAmount != null && totalSum >= totalAmount && lastItem.item_name === "" && lastItem.price === "" && lastItem.category === "" && items.length > 1) {
             setItems(items => items.filter((item, index) => index !== items.length - 1));
         }
     }, [totalAmount, items, addItem]);
+    
     
 
     const updateItem = (index, updatedItem) => {
@@ -41,17 +41,42 @@ function ReceiptForm({ onSubmit }) {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        
-        const hasItemsWithoutCategory = items.some(item => !item.category);
-        if (hasItemsWithoutCategory) {
-            // You can notify the user about the issue here, for example
-            alert('All items must have a category!');
+    
+        // Filter out the items that are not completed (missing either item_name, price, or category)
+        const cleanedItems = items.filter(item => item.item_name || item.price || item.category);
+    
+        // Check if any item is missing item_name, price, or category
+        const hasItemsWithoutName = cleanedItems.some(item => !item.item_name);
+        const hasItemsWithoutPrice = cleanedItems.some(item => !item.price);
+        const hasItemsWithoutCategory = cleanedItems.some(item => !item.category);
+
+        let missingItemFields = [];
+        let missingStoreField = '';
+
+        if (store === "") missingStoreField = 'Please provide the name of the store.';
+        if (hasItemsWithoutName) missingItemFields.push('name');
+        if (hasItemsWithoutPrice) missingItemFields.push('price');
+        if (hasItemsWithoutCategory) missingItemFields.push('category');
+
+        if (missingStoreField || missingItemFields.length > 0) {
+            let alertMessage = '';
+
+            if (missingStoreField) {
+                alertMessage += missingStoreField + ' ';
+            }
+
+            if (missingItemFields.length > 0) {
+                alertMessage += 'All items must have a ' + missingItemFields.join(' and ') + '!';
+            }
+
+            alert(alertMessage);
             return;
         }
-
-        let totalSum = items.reduce((total, item) => total + parseFloat(item.price || 0), 0);
-        if (totalAmount != null && totalSum > totalAmount) {
+    
+        let totalSum = cleanedItems.reduce((total, item) => total + parseFloat(item.price || 0), 0);
+        if (totalAmount != null && totalSum !== totalAmount) {
             // Don't submit if the sum of item prices is more than the total amount provided
+            alert('sum is not equal to total');
             return;
         }
     
@@ -66,7 +91,7 @@ function ReceiptForm({ onSubmit }) {
             const receiptId = res.id;  // get the id of the created receipt
     
             // For each item, we add the receipt id and make a POST request to the ReceiptItem API
-            const receiptItemsPromises = items.filter(item => item.price && item.item_name && item.category).map(item => {
+            const receiptItemsPromises = cleanedItems.map(item => {
                 const receiptItem = { ...item, receipt: receiptId, category: parseInt(item.category) }; // Ensure category is an integer (category ID)
                 console.log('posted data in ReceiptItemForm:')
                 console.log(receiptItem)
@@ -81,6 +106,7 @@ function ReceiptForm({ onSubmit }) {
             console.error(error);
         }
     };
+    
 
     return (
         <form onSubmit={handleSubmit}>

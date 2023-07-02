@@ -17,6 +17,10 @@ function MainApp({ setIsLoggedIn }) {
     const isAuthError = useSelector(state => state.isAuthError);
 
     useEffect(() => {
+        dispatch({ type: 'SET_SHOULD_REFRESH', payload: true });
+    }, [dispatch]);
+    
+    useEffect(() => {
         if (isAuthError) {
             setIsLoggedIn(false);
             navigate('/login');
