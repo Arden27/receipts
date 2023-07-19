@@ -4,6 +4,8 @@ import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
 import MainApp from './components/MainApp';
 
+import './tailwind.css';
+
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
