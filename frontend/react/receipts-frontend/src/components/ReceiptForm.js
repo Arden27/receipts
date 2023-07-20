@@ -148,6 +148,23 @@ function ReceiptForm({ onSubmit }) {
                     />
                 </div>
             </div>
+            <div className="flex space-x-4">
+                <div className="flex-1">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Item Name:
+                    </label>
+                </div>
+                <div className="flex-1">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Price:
+                    </label>
+                </div>
+                <div className="flex-1">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Category:
+                    </label>
+                </div>
+            </div>
             {items.map((item, index) => (
                 <ReceiptItemForm 
                     key={index} 
