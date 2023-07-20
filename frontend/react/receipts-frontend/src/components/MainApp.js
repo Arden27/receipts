@@ -28,8 +28,8 @@ function MainApp({ setIsLoggedIn }) {
         }
     }, [isAuthError, setIsLoggedIn, navigate, dispatch]);
 
-    const handleAddReceiptClick = () => {
-        setAddingReceipt(true);
+    const handleToggleReceiptForm = () => {
+        setAddingReceipt(!addingReceipt);
     };
 
     const handleLogout = async () => {
@@ -52,15 +52,21 @@ function MainApp({ setIsLoggedIn }) {
 
     return (
         <div className="App grid grid-cols-2 gap-4">
+            <nav className="col-span-2 flex justify-between bg-blue-500 p-4 text-white">
+                <button 
+                    onClick={handleToggleReceiptForm} 
+                    className={addingReceipt ? "font-bold py-2 px-4 rounded bg-white text-red-500 border border-red-500 hover:bg-red-500 hover:text-white" : "font-bold py-2 px-4 rounded bg-green-500 hover:bg-green-700"}
+                >
+                    {addingReceipt ? "Close" : "Add Receipt"}
+                </button>
+                <button 
+                    onClick={handleLogout} 
+                    className="font-bold py-2 px-4 rounded bg-red-500 hover:bg-red-700"
+                >
+                    Logout
+                </button>
+            </nav>
             <div className="col-span-1">
-                {!addingReceipt && 
-                    <button 
-                        onClick={handleAddReceiptClick} 
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Add Receipt
-                    </button>
-                }
                 {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
                 <div className="flex flex-col space-y-4">
                     <ReceiptList />
@@ -71,16 +77,8 @@ function MainApp({ setIsLoggedIn }) {
                 <Totals />
                 <CategoryList />
             </div>
-            <button 
-                onClick={handleLogout} 
-                className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            >
-                Logout
-            </button>
         </div>
     );
-    
 }
 
 export default MainApp;
-
