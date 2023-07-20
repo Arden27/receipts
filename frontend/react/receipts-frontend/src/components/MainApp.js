@@ -57,7 +57,7 @@ function MainApp({ setIsLoggedIn }) {
                     onClick={handleToggleReceiptForm} 
                     className={addingReceipt ? "font-bold py-2 px-4 rounded bg-white text-red-500 border border-red-500 hover:bg-red-500 hover:text-white" : "font-bold py-2 px-4 rounded bg-green-500 hover:bg-green-700"}
                 >
-                    {addingReceipt ? "Close" : "Add Receipt"}
+                    {addingReceipt ? "Cancel" : "Add Receipt"}
                 </button>
                 <button 
                     onClick={handleLogout} 

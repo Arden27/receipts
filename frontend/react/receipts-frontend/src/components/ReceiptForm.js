@@ -148,41 +148,45 @@ function ReceiptForm({ onSubmit }) {
                     />
                 </div>
             </div>
-            <div className="flex space-x-4">
-                <div className="flex-1">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Item Name:
-                    </label>
+            <div className="mt-4 bg-gray-100 p-4 rounded border border-gray-300">
+                <div className="flex space-x-4">
+                    <div className="flex-1">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Item Name:
+                        </label>
+                    </div>
+                    <div className="flex-1">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Price:
+                        </label>
+                    </div>
+                    <div className="flex-1">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Category:
+                        </label>
+                    </div>
                 </div>
-                <div className="flex-1">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Price:
-                    </label>
-                </div>
-                <div className="flex-1">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Category:
-                    </label>
-                </div>
+
+                {items.map((item, index) => (
+                    <ReceiptItemForm 
+                        key={index} 
+                        item={item} 
+                        onItemChange={updatedItem => updateItem(index, updatedItem)} 
+                    />
+                ))}
+
+                {totalAmount == null && 
+                    <div className="flex items-center justify-between mt-4">
+                        <button 
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                            type="button" 
+                            onClick={addItem}
+                        >
+                            Add Another Item
+                        </button>
+                    </div>
+                }
             </div>
-            {items.map((item, index) => (
-                <ReceiptItemForm 
-                    key={index} 
-                    item={item} 
-                    onItemChange={updatedItem => updateItem(index, updatedItem)} 
-                />
-            ))}
-            {totalAmount == null && 
-                <div className="flex items-center justify-between mt-4">
-                    <button 
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-                        type="button" 
-                        onClick={addItem}
-                    >
-                        Add Another Item
-                    </button>
-                </div>
-            }
             <div className="flex items-center justify-between mt-4">
                 <button 
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
