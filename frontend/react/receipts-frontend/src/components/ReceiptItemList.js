@@ -47,28 +47,28 @@ function ReceiptItemList() {
     };
 
     return (
-        <div>
-            <h2>Items</h2>
-            <table>
-                <thead>
+        <div className="p-4">
+            <h2 className="text-2xl font-bold mb-4">Items</h2>
+            <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                     <tr>
-                        <th>Item Name</th>
-                        <th>Price</th>
-                        <th>Category</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y divide-gray-200">
                     {receiptItems && receiptItems.length > 0 && receiptItems.map(item => (
-                        <tr key={item.id}>
-                            <td>{item.item_name}</td>
-                            <td>{item.price}</td>
-                            <td>{item.category ? findCategoryNameById(item.category) : 'Unknown'}</td>
+                        <tr key={item.id} className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                            <td className="px-6 py-1 whitespace-nowrap">{item.item_name}</td>
+                            <td className="px-6 py-1 whitespace-nowrap">{item.price}</td>
+                            <td className="px-6 py-1 whitespace-nowrap">{item.category ? findCategoryNameById(item.category) : 'Unknown'}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-    );
+    );    
 }
 
 export default ReceiptItemList;

@@ -109,23 +109,43 @@ function ReceiptForm({ onSubmit }) {
     
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Store:
-                <input type="text" value={store} onChange={e => setStore(e.target.value)} />
-            </label>
-            <label>
-                Date:
-                <input type="date" value={date} onChange={e => setDate(e.target.value)} />
-            </label>
-            <label>
-                Total:
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="store">
+                    Store:
+                </label>
                 <input 
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    id="store" 
+                    type="text" 
+                    value={store} 
+                    onChange={e => setStore(e.target.value)} 
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+                    Date:
+                </label>
+                <input 
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    id="date" 
+                    type="date" 
+                    value={date} 
+                    onChange={e => setDate(e.target.value)} 
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="total">
+                    Total:
+                </label>
+                <input 
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    id="total" 
                     type="number" 
                     value={totalAmount || ''} 
                     onChange={e => setTotalAmount(e.target.value === '' ? null : Number(e.target.value))} 
                 />
-            </label>
+            </div>
             {items.map((item, index) => (
                 <ReceiptItemForm 
                     key={index} 
@@ -133,10 +153,28 @@ function ReceiptForm({ onSubmit }) {
                     onItemChange={updatedItem => updateItem(index, updatedItem)} 
                 />
             ))}
-            {totalAmount == null && <button type="button" onClick={addItem}>Add Another Item</button>}
-            <button type="submit">Submit Receipt</button>
+            {totalAmount == null && 
+                <div className="flex items-center justify-between mt-4">
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                        type="button" 
+                        onClick={addItem}
+                    >
+                        Add Another Item
+                    </button>
+                </div>
+            }
+            <div className="flex items-center justify-between mt-4">
+                <button 
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                    type="submit"
+                >
+                    Submit Receipt
+                </button>
+            </div>
         </form>
     );
+    
     
 }
 

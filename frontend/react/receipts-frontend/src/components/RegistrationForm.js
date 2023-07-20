@@ -35,7 +35,7 @@ function RegistrationForm({ onRegister }) {
     };
 
     return (
-        <body className="min-h-screen bg-gradient-to-r from-blue-500 to-green-200">
+        <div className="min-h-screen bg-gradient-to-r from-blue-500 to-green-200">
             <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center min-h-screen space-y-4">
                 <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" className="border-2 border-blue-200 rounded px-3 py-2 w-64 focus:outline-none focus:border-blue-500 focus:shadow-outline" />
                 <input type="password" value={password1} onChange={e => setPassword1(e.target.value)} placeholder="Password" className="border-2 border-blue-200 rounded px-3 py-2 w-64 focus:outline-none focus:border-blue-500 focus:shadow-outline" />
@@ -43,10 +43,10 @@ function RegistrationForm({ onRegister }) {
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
                 {error && <div className="text-red-500">{error}</div>}
                 <div>
-                    Already have an account? <Link to="/login" className="text-blue-500 font-bold hover:text-blue-700 bold">Login</Link>
+                    Already have an account? <Link to="/login" className="text-blue-700 font-bold hover:text-blue-900">Login</Link>
                 </div>
             </form>
-        </body>
+        </div>
     );
 }
 

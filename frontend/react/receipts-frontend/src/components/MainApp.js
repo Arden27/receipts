@@ -51,16 +51,35 @@ function MainApp({ setIsLoggedIn }) {
     };
 
     return (
-        <div className="App">
-            {!addingReceipt && <button onClick={handleAddReceiptClick}>Add Receipt</button>}
-            {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
-            <ReceiptList />
-            <ReceiptItemList />
-            <Totals />
-            <CategoryList />
-            <button onClick={handleLogout}>Logout</button>
+        <div className="App grid grid-cols-2 gap-4">
+            <div className="col-span-1">
+                {!addingReceipt && 
+                    <button 
+                        onClick={handleAddReceiptClick} 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Add Receipt
+                    </button>
+                }
+                {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
+                <div className="flex flex-col space-y-4">
+                    <ReceiptList />
+                    <ReceiptItemList />
+                </div>
+            </div>
+            <div className="col-span-1 flex flex-col space-y-4">
+                <Totals />
+                <CategoryList />
+            </div>
+            <button 
+                onClick={handleLogout} 
+                className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+                Logout
+            </button>
         </div>
     );
+    
 }
 
 export default MainApp;

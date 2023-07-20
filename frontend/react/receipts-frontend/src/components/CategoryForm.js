@@ -26,15 +26,25 @@ function CategoryForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Category Name:
-                <input type="text" value={categoryName} onChange={e => setCategoryName(e.target.value)} />
-            </label>
-            <button type="submit">Add Category</button>
-            {warning && <p>{warning}</p>} {/* Display warning message if present */}
+        <form onSubmit={handleSubmit} className="w-full max-w-sm mt-4">
+            <div className="flex items-center border-b border-teal-500 py-2">
+                <input className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" 
+                    type="text" 
+                    placeholder="Category Name" 
+                    value={categoryName} 
+                    onChange={e => setCategoryName(e.target.value)}
+                />
+                <button className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" 
+                    type="submit">
+                    Add Category
+                </button>
+            </div>
+            {warning && 
+                <p className="mt-2 text-red-500 text-xs italic">{warning}</p>
+            } {/* Display warning message if present */}
         </form>
     );
+    
 }
 
 export default CategoryForm;

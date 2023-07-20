@@ -33,18 +33,45 @@ function ReceiptItemForm({ item, onItemChange }) {
     };
 
     return (
-        <div>
-            <label>
-                Item Name:
-                <input type="text" name="item_name" value={item.item_name || ''} onChange={handleChange} />
-            </label>
-            <label>
-                Price:
-                <input type="number" name="price" step="0.01" value={item.price || ''} onChange={handleChange} />
-            </label>
-            <label>
-                Category:
-                <select name="category" value={item.category || ''} onChange={handleChange}>
+        <div className="border-t border-gray-200 pt-4">
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`item_name_${item.id}`}>
+                    Item Name:
+                </label>
+                <input 
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    id={`item_name_${item.id}`}
+                    type="text" 
+                    name="item_name" 
+                    value={item.item_name || ''} 
+                    onChange={handleChange} 
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`price_${item.id}`}>
+                    Price:
+                </label>
+                <input 
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    id={`price_${item.id}`}
+                    type="number" 
+                    name="price" 
+                    step="0.01" 
+                    value={item.price || ''} 
+                    onChange={handleChange} 
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`category_${item.id}`}>
+                    Category:
+                </label>
+                <select 
+                    className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id={`category_${item.id}`}
+                    name="category" 
+                    value={item.category || ''} 
+                    onChange={handleChange}
+                >
                     <option value="">Select category</option>
                     {categories.map(category => (
                         <option key={category.id} value={category.id}>
@@ -52,9 +79,10 @@ function ReceiptItemForm({ item, onItemChange }) {
                         </option>
                     ))}
                 </select>
-            </label>
+            </div>
         </div>
     );
+    
 }
 
 export default ReceiptItemForm;

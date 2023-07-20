@@ -33,40 +33,40 @@ function Totals() {
     }, [shouldRefresh]);
 
     return (
-        <div>
-            <h3>Statistics</h3>
-            <table>
-                <thead>
+        <div className="p-4">
+            <h3 className="text-xl font-bold mb-4">Statistics</h3>
+            <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                     <tr>
-                        <th>Period</th>
-                        <th>Total</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Total</td>
-                        <td>{totalPrice}</td>
+                <tbody className="bg-white divide-y divide-gray-200">
+                    <tr className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                        <td className="px-6 py-2 whitespace-nowrap">Total</td>
+                        <td className="px-6 py-2 whitespace-nowrap">{totalPrice}</td>
                     </tr>
-                    <tr>
-                        <td>Current Month</td>
-                        <td>{totalPriceCurrentMonth}</td>
+                    <tr className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                        <td className="px-6 py-2 whitespace-nowrap">Current Month</td>
+                        <td className="px-6 py-2 whitespace-nowrap">{totalPriceCurrentMonth}</td>
                     </tr>
-                    <tr>
-                        <td>Last Month</td>
-                        <td>{totalPriceLastMonth}</td>
+                    <tr className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                        <td className="px-6 py-2 whitespace-nowrap">Last Month</td>
+                        <td className="px-6 py-2 whitespace-nowrap">{totalPriceLastMonth}</td>
                     </tr>
-                    <tr>
-                        <td>For One Month</td>
-                        <td>{totalPriceForOneMonth}</td>
+                    <tr className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                        <td className="px-6 py-2 whitespace-nowrap">For One Month</td>
+                        <td className="px-6 py-2 whitespace-nowrap">{totalPriceForOneMonth}</td>
                     </tr>
-                    <tr>
-                        <td>This Day Last Month</td>
-                        <td>{totalPriceSameDayLastMonth}</td>
+                    <tr className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                        <td className="px-6 py-2 whitespace-nowrap">This Day Last Month</td>
+                        <td className="px-6 py-2 whitespace-nowrap">{totalPriceSameDayLastMonth}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    );
+    );    
 }
 
 export default Totals;
