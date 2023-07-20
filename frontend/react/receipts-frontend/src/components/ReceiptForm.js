@@ -110,41 +110,43 @@ function ReceiptForm({ onSubmit }) {
 
     return (
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="store">
-                    Store:
-                </label>
-                <input 
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                    id="store" 
-                    type="text" 
-                    value={store} 
-                    onChange={e => setStore(e.target.value)} 
-                />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
-                    Date:
-                </label>
-                <input 
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                    id="date" 
-                    type="date" 
-                    value={date} 
-                    onChange={e => setDate(e.target.value)} 
-                />
-            </div>
-            <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="total">
-                    Total:
-                </label>
-                <input 
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                    id="total" 
-                    type="number" 
-                    value={totalAmount || ''} 
-                    onChange={e => setTotalAmount(e.target.value === '' ? null : Number(e.target.value))} 
-                />
+            <div className="flex space-x-4 mb-4">
+                <div className="w-1/3">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="store">
+                        Store:
+                    </label>
+                    <input 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        id="store" 
+                        type="text" 
+                        value={store} 
+                        onChange={e => setStore(e.target.value)} 
+                    />
+                </div>
+                <div className="w-1/3">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+                        Date:
+                    </label>
+                    <input 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        id="date" 
+                        type="date" 
+                        value={date} 
+                        onChange={e => setDate(e.target.value)} 
+                    />
+                </div>
+                <div className="w-1/3">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="total">
+                        Total:
+                    </label>
+                    <input 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        id="total" 
+                        type="number" 
+                        value={totalAmount || ''} 
+                        onChange={e => setTotalAmount(e.target.value === '' ? null : Number(e.target.value))} 
+                    />
+                </div>
             </div>
             {items.map((item, index) => (
                 <ReceiptItemForm 
