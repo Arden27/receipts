@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReceiptForm from './ReceiptForm';
 import ReceiptList from './ReceiptList';
-import ReceiptItemList from './ReceiptItemList';
+//import ReceiptItemList from './ReceiptItemList';
 import { useNavigate } from "react-router-dom";
 import CategoryList from './CategoryList';
 import Totals from './Totals';
@@ -51,8 +51,8 @@ function MainApp({ setIsLoggedIn }) {
     };
 
     return (
-        <div className="App grid grid-cols-2 gap-4">
-            <nav className="col-span-2 flex justify-between bg-blue-500 p-4 text-white">
+        <div className="App grid grid-cols-2 grid-rows-auto-1fr-1fr h-screen gap-4">
+            <nav className="row-span-1 col-span-2 flex justify-between bg-blue-400 p-4 text-white">
                 <button 
                     onClick={handleToggleReceiptForm} 
                     className={addingReceipt ? "font-bold py-2 px-4 rounded bg-white text-red-500 border border-red-500 hover:bg-red-500 hover:text-white" : "font-bold py-2 px-4 rounded bg-green-500 hover:bg-green-700"}
@@ -66,15 +66,14 @@ function MainApp({ setIsLoggedIn }) {
                     Logout
                 </button>
             </nav>
-            <div className="col-span-1">
+            <div className="row-span-2 col-span-1 overflow-auto">
                 {addingReceipt && <ReceiptForm onSubmit={handleReceiptSubmit} />}
-                <div className="flex flex-col space-y-4">
-                    <ReceiptList />
-                    <ReceiptItemList />
-                </div>
+                <ReceiptList />
             </div>
-            <div className="col-span-1 flex flex-col space-y-4">
+            <div className="row-start-2 col-start-2 overflow-auto">
                 <Totals />
+            </div>
+            <div className="row-start-3 col-start-2 overflow-auto">
                 <CategoryList />
             </div>
         </div>

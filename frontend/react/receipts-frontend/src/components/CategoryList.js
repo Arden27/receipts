@@ -26,27 +26,30 @@ function CategoryList() {
     }, [loadData, shouldRefresh]); // Add shouldRefresh to dependency array
 
     return (
-        <div className="p-4">
+        <div className="p-4 flex flex-col h-full min-h-0">
             <h2 className="text-2xl font-bold mb-4">Category</h2>
-            <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                    <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category Name</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                    </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                    {categories && categories.length > 0 && categories.map(category => (
-                        <tr key={category.id} className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
-                            <td className="px-6 py-2 whitespace-nowrap">{category.name}</td>
-                            <td className="px-6 py-2 whitespace-nowrap">{category.category_item_count}</td>
-                            <td className="px-6 py-2 whitespace-nowrap">{category.total_category_price}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
             <CategoryForm />
+            <div className="overflow-auto flex-grow">
+                <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category Name</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {categories && categories.length > 0 && categories.map(category => (
+                            <tr key={category.id} className="hover:bg-gray-100 transition-colors duration-200 ease-in-out">
+                                <td className="px-6 py-2 whitespace-nowrap">{category.name}</td>
+                                <td className="px-6 py-2 whitespace-nowrap">{category.category_item_count}</td>
+                                <td className="px-6 py-2 whitespace-nowrap">{category.total_category_price}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            
         </div>
     );    
 }

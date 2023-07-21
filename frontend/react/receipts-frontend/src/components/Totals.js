@@ -34,7 +34,7 @@ function Totals() {
 
     return (
         <div className="p-4">
-            <h3 className="text-xl font-bold mb-4">Statistics</h3>
+            <h2 className="text-2xl font-bold mb-2">Statistics</h2>
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>
