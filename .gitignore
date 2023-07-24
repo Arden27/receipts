@@ -13,6 +13,7 @@ __pycache__/
 /dist
 staticfiles/staticfiles_backup/
 /staticfiles
+/avatar_env
 
 
 
