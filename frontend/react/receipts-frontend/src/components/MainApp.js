@@ -70,7 +70,7 @@ function MainApp({ setIsLoggedIn }) {
 					Logout
 				</button>
 			</nav>
-			<div className="row-span-2">
+			<div className="row-span-2 col-span-1 overflow-auto">
 				{addingReceipt && (
 					<ReceiptForm onSubmit={handleReceiptSubmit} />
 				)}
