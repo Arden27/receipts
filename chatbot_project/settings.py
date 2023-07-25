@@ -161,7 +161,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -180,7 +180,7 @@ LOGGING = {
         },
     },
 }
-
+"""
 CORS_ORIGIN_ALLOW_ALL = os.getenv("DJANGO_CORS_ORIGIN_ALLOW_ALL") == "True"
 
 CORS_ORIGIN_WHITELIST = os.getenv("DJANGO_CORS_ORIGIN_WHITELIST").split(",")
