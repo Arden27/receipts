@@ -68,10 +68,13 @@ function ReceiptList() {
 							receipts.length > 0 &&
 							receipts.map((receipt) => (
 								<React.Fragment key={receipt.id}>
-									<tr onClick={() => handleReceiptClick(receipt)} className="cursor-pointer transition-colors duration-200 ease-in-out hover:bg-gray-100">
+									<tr className="group relative cursor-pointer transition-colors duration-200 ease-in-out hover:bg-gray-100" onClick={() => handleReceiptClick(receipt)}>
 										<td className="w-1/3 whitespace-nowrap px-6 py-2">{new Date(receipt.date).toLocaleDateString()}</td>
 										<td className="w-1/3 whitespace-nowrap px-6 py-2">{receipt.store}</td>
-										<td className="w-1/3 whitespace-nowrap px-6 py-2">{receipt.total}</td>
+										<td className="relative w-1/3 whitespace-nowrap px-6 py-2">
+											{receipt.total}
+											<button className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 transform opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">Edit</button>
+										</td>
 									</tr>
 									{selectedReceipt && selectedReceipt.id === receipt.id && (
 										<tr>
