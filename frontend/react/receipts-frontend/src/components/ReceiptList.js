@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchReceipts, fetchReceiptItemsById } from "../api";
 import { useSelector, useDispatch } from "react-redux";
 
-function ReceiptList() {
+function ReceiptList( {onEdit} ) {
 	const [receipts, setReceipts] = useState([]);
 	const [selectedReceipt, setSelectedReceipt] = useState(null);
 	const [selectedItems, setSelectedItems] = useState([]);
@@ -47,6 +47,15 @@ function ReceiptList() {
 		}
 	};
 
+    const handleEditClick = (event, receipt) => {
+        event.stopPropagation(); // Prevent triggering handleReceiptClick
+    
+        // Fetch receipt items and pass them to onEdit function
+        fetchReceiptItemsById(receipt.id)
+          .then((items) => onEdit(receipt, items))
+          .catch(console.error);
+      };
+
 	return (
 		<div className="flex h-full min-h-0 flex-col px-4 py-2">
 			<h2 className="mb-1 flex justify-center text-2xl font-bold">Receipts</h2>
@@ -73,7 +82,7 @@ function ReceiptList() {
 										<td className="w-1/3 whitespace-nowrap px-6 py-2">{receipt.store}</td>
 										<td className="relative w-1/3 whitespace-nowrap px-6 py-2">
 											{receipt.total}
-											<button className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 transform opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">Edit</button>
+											<button className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 transform opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100" onClick={(event) => handleEditClick(event, receipt)}>Edit</button>
 										</td>
 									</tr>
 									{selectedReceipt && selectedReceipt.id === receipt.id && (
