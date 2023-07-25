@@ -50,24 +50,28 @@ function ReceiptList() {
 	return (
 		<div className="flex h-full min-h-0 flex-col px-4 py-2">
 			<h2 className="mb-1 flex justify-center text-2xl font-bold">Receipts</h2>
-			<div className="flex-grow overflow-auto">
-				<table className="min-w-full divide-y divide-gray-200">
+			<div className="min-w-full divide-y divide-gray-200">
+				<table className="w-full table-fixed">
 					<thead className="bg-gray-50">
 						<tr>
-							<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Date</th>
-							<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Store</th>
-							<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Total</th>
+							<th className="w-1/3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Date</th>
+							<th className="w-1/3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Store</th>
+							<th className="w-1/3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Total</th>
 						</tr>
 					</thead>
+				</table>
+			</div>
+			<div className="flex-grow overflow-auto">
+				<table className="w-full min-w-full table-fixed divide-y divide-gray-200">
 					<tbody className="divide-y divide-gray-200 bg-white">
 						{receipts &&
 							receipts.length > 0 &&
 							receipts.map((receipt) => (
 								<React.Fragment key={receipt.id}>
 									<tr onClick={() => handleReceiptClick(receipt)} className="cursor-pointer transition-colors duration-200 ease-in-out hover:bg-gray-100">
-										<td className="whitespace-nowrap px-6 py-2">{new Date(receipt.date).toLocaleDateString()}</td>
-										<td className="whitespace-nowrap px-6 py-2">{receipt.store}</td>
-										<td className="whitespace-nowrap px-6 py-2">{receipt.total}</td>
+										<td className="w-1/3 whitespace-nowrap px-6 py-2">{new Date(receipt.date).toLocaleDateString()}</td>
+										<td className="w-1/3 whitespace-nowrap px-6 py-2">{receipt.store}</td>
+										<td className="w-1/3 whitespace-nowrap px-6 py-2">{receipt.total}</td>
 									</tr>
 									{selectedReceipt && selectedReceipt.id === receipt.id && (
 										<tr>

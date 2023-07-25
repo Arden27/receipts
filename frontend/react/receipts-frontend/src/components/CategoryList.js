@@ -31,23 +31,27 @@ function CategoryList() {
 			<div className="flex justify-end">
 				<CategoryForm />
 			</div>
-			<div className="flex-grow overflow-auto">
-				<table className="min-w-full divide-y divide-gray-200">
+			<div className="min-w-full divide-y divide-gray-200">
+				<table className="w-full table-fixed">
 					<thead className="bg-gray-50">
 						<tr>
-							<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Category Name</th>
-							<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Items</th>
-							<th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Total</th>
+							<th className="w-1/3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Category Name</th>
+							<th className="w-1/3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Items</th>
+							<th className="w-1/3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Total</th>
 						</tr>
 					</thead>
+				</table>
+			</div>
+			<div className="flex-grow overflow-auto">
+				<table className="w-full min-w-full table-fixed divide-y divide-gray-200">
 					<tbody className="divide-y divide-gray-200 bg-white">
 						{categories &&
 							categories.length > 0 &&
 							categories.map((category) => (
 								<tr key={category.id} className="transition-colors duration-200 ease-in-out hover:bg-gray-100">
-									<td className="whitespace-nowrap px-6 py-2">{category.name}</td>
-									<td className="whitespace-nowrap px-6 py-2">{category.category_item_count}</td>
-									<td className="whitespace-nowrap px-6 py-2">{category.total_category_price}</td>
+									<td className="w-1/3 whitespace-nowrap px-6 py-2">{category.name}</td>
+									<td className="w-1/3 whitespace-nowrap px-6 py-2">{category.category_item_count}</td>
+									<td className="w-1/3 whitespace-nowrap px-6 py-2">{category.total_category_price}</td>
 								</tr>
 							))}
 					</tbody>
