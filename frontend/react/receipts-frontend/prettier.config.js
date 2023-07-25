@@ -3,6 +3,6 @@ module.exports = {
     tailwindConfig: "./tailwind.config.js",
     plugins: ["prettier-plugin-tailwindcss"],
     tabWidth: 4,
-	useTabs: true,
-	PrintWidth: 300,
+    useTabs: true,
+    printWidth: 300,
 };
