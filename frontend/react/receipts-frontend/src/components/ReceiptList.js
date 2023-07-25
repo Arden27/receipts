@@ -48,8 +48,8 @@ function ReceiptList() {
     };
 
     return (
-        <div className="p-4 flex flex-col h-full min-h-0">
-            <h2 className="flex text-2xl font-bold mb-4 justify-center">Receipts</h2>
+        <div className="px-4 py-2 flex flex-col h-full min-h-0">
+            <h2 className="flex text-2xl font-bold mb-1 justify-center">Receipts</h2>
             <div className="overflow-auto flex-grow">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">

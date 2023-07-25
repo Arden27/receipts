@@ -51,7 +51,7 @@ function MainApp({ setIsLoggedIn }) {
     };
 
     return (
-        <div className="App grid grid-cols-2 grid-rows-[auto_auto_1fr] h-screen gap-4">
+        <div className="App grid grid-cols-2 grid-rows-[auto_auto_1fr] h-screen">
             <nav className="col-span-2 flex justify-between bg-blue-400 p-4 text-white">
                 <button 
                     onClick={handleToggleReceiptForm} 

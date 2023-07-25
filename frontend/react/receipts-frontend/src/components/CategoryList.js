@@ -26,9 +26,9 @@ function CategoryList() {
 	}, [loadData, shouldRefresh]); // Add shouldRefresh to dependency array
 
 	return (
-		<div className="flex h-full min-h-0 flex-col p-4">
-			<h2 className="mb-4 flex justify-center text-2xl font-bold">Category</h2>
-			<CategoryForm />
+		<div className="flex h-full min-h-0 flex-col px-4">
+			<h2 className="flex justify-center text-2xl font-bold">Category</h2>
+			<div className="flex justify-end"><CategoryForm /></div>
 			<div className="flex-grow overflow-auto">
 				<table className="min-w-full divide-y divide-gray-200">
 					<thead className="bg-gray-50">
