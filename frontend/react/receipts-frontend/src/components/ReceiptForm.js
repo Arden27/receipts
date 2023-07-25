@@ -4,7 +4,7 @@ import { createReceipt, createReceiptItem } from "../api";
 import { useDispatch } from "react-redux";
 import { setShouldRefresh } from "../redux/store";
 
-function ReceiptForm({ onSubmit }) {
+function ReceiptForm({ onSubmit, receipt = null, items = null }) {
 	const today = new Date();
 	const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
@@ -36,6 +36,21 @@ function ReceiptForm({ onSubmit }) {
 		newItems[index] = updatedItem;
 		setItems(newItems);
 	};
+
+  useEffect(() => {
+    if (receipt) {
+      setStore(receipt.store);
+      setDate(receipt.date);
+      setTotalAmount(parseFloat(receipt.total));
+    }
+    
+    if (items) {
+      setItems(items);
+    }
+  }, [receipt, items]);
+
+  // Check if receipt and items are not null to set isEditMode to true
+  const isEditMode = receipt !== null && items !== null;
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
