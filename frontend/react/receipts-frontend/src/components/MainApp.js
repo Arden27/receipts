@@ -51,8 +51,8 @@ function MainApp({ setIsLoggedIn }) {
     };
 
     return (
-        <div className="App grid grid-cols-2 grid-rows-auto-1fr-1fr h-screen gap-4">
-            <nav className="row-span-1 col-span-2 flex justify-between bg-blue-400 p-4 text-white">
+        <div className="App grid grid-cols-2 grid-rows-[auto_auto_1fr] h-screen gap-4">
+            <nav className="col-span-2 flex justify-between bg-blue-400 p-4 text-white">
                 <button 
                     onClick={handleToggleReceiptForm} 
                     className={addingReceipt ? "font-bold py-2 px-4 rounded bg-white text-red-500 border border-red-500 hover:bg-red-500 hover:text-white" : "font-bold py-2 px-4 rounded bg-green-500 hover:bg-green-700"}
