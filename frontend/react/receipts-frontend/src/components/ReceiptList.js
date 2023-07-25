@@ -17,7 +17,7 @@ function ReceiptList() {
 			if (shouldRefresh) {
 				try {
 					const data = await fetchReceipts();
-					setReceipts(data);
+					setReceipts(data.reverse());
 				} catch (error) {
 					console.error(error);
 				}
