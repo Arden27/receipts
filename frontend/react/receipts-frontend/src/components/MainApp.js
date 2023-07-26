@@ -7,6 +7,7 @@ import CategoryList from "./CategoryList";
 import Totals from "./Totals";
 import { resetStore, setAuthError } from "../redux/store";
 import { logoutUser } from "../api";
+import { setShouldRefresh } from "../redux/store";
 
 function MainApp({ setIsLoggedIn }) {
 	const dispatch = useDispatch();
@@ -61,7 +62,7 @@ function MainApp({ setIsLoggedIn }) {
 		setFormVisible(false);
 		setEditableReceipt(null);
 		setEditableItems(null);
-		dispatch({ type: "SET_SHOULD_REFRESH", payload: true });
+		dispatch(setShouldRefresh(true));
 	};
 
     const handleCancel = () => {

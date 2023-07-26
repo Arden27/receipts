@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import ReceiptItemForm from "./ReceiptItemForm";
 import { createReceipt, createReceiptItem } from "../api";
 import { updateReceipt, updateReceiptItem } from "../api";
+import { deleteReceipt } from "../api";
 import { useDispatch } from "react-redux";
 import { setShouldRefresh } from "../redux/store";
 
@@ -49,38 +50,6 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 			setItems(initialItems);
 		}
 	}, [receipt, initialItems]);
-
-	// useEffect(() => {
-	//   if (!receipt){
-	//     console.log('receiot is false')
-	//   } else{
-	//     console.log('receipt is true')
-	//   }
-
-	//   if (initialItems === null){
-	//     console.log('initialItems is null')
-	//   } else{
-	//     console.log('initialItems is true')
-	//   }
-
-	// 	if (receipt) {
-	// 		setStore(receipt.store);
-	// 		setDate(receipt.date);
-	// 		setTotalAmount(parseFloat(receipt.total));
-	// 		console.log("receipt");
-	// 		console.log(receipt);
-	// 	}
-
-	// 	if (initialItems) {
-	// 		const newItems = initialItems.map((item) => ({ item_name: item.item_name, price: item.price, category: item.category }));
-	// 		setItems(newItems);
-	// 		console.log("newItems:");
-	// 		console.log(newItems);
-	// 	}
-	// }, [receipt, initialItems]);
-
-	// Check if receipt and items are not null to set isEditMode to true
-	//const isEditMode = receipt !== null && items !== null;
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -188,6 +157,22 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 		}
 	};
 
+	const handleDelete = async () => {
+		if (!receipt) {
+		  console.error("No receipt to delete");
+		  alert('no receipt')
+		  return;
+		}
+	  
+		// Call deleteReceipt API method
+		try {
+		  await deleteReceipt(receipt.id);
+		  onSubmit();
+		} catch (error) {
+		  console.error(error);
+		}
+	  };
+
 	return (
 		<form onSubmit={handleSubmit} className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
 			<div className="mb-4 flex space-x-4">
@@ -254,7 +239,7 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 					)}
 					<button className="focus:shadow-outline px-4 py-2 text-red-500 hover:font-bold focus:outline-none" type="reset">Reset</button>
 				</div>
-				{editMode && <button className="focus:shadow-outline bg-white-500 rounded px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white focus:outline-none" type="button">Delete</button>}
+				{editMode && <button className="focus:shadow-outline bg-white-500 rounded px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white focus:outline-none" type="button" onClick={handleDelete}>Delete</button>}
 			</div>
 		</form>
 	);
