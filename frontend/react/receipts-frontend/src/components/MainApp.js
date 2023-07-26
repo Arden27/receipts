@@ -68,7 +68,7 @@ function MainApp({ setIsLoggedIn }) {
 				</button>
 			</nav>
 			<div className="col-span-1 row-span-2 overflow-auto">
-				{isFormVisible && isEditMode ? <ReceiptForm onSubmit={handleSubmit} editMode={true} receipt={editableReceipt} items={editableItems} /> : isFormVisible && <ReceiptForm onSubmit={handleSubmit} />}
+				{isFormVisible && isEditMode ? <ReceiptForm onSubmit={handleSubmit} editMode={true} receipt={editableReceipt} initialItems={editableItems} /> : isFormVisible && <ReceiptForm onSubmit={handleSubmit} />}
 				<ReceiptList onEdit={handleEdit} />
 			</div>
 			<div className="col-start-2 row-start-2 overflow-auto">

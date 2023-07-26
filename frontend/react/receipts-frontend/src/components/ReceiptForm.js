@@ -49,6 +49,36 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 		}
 	}, [receipt, initialItems]);
 
+
+  // useEffect(() => {
+  //   if (!receipt){
+  //     console.log('receiot is false')
+  //   } else{
+  //     console.log('receipt is true')
+  //   }
+
+  //   if (initialItems === null){
+  //     console.log('initialItems is null')
+  //   } else{
+  //     console.log('initialItems is true')
+  //   }
+
+	// 	if (receipt) {
+	// 		setStore(receipt.store);
+	// 		setDate(receipt.date);
+	// 		setTotalAmount(parseFloat(receipt.total));
+	// 		console.log("receipt");
+	// 		console.log(receipt);
+	// 	}
+
+	// 	if (initialItems) {
+	// 		const newItems = initialItems.map((item) => ({ item_name: item.item_name, price: item.price, category: item.category }));
+	// 		setItems(newItems);
+	// 		console.log("newItems:");
+	// 		console.log(newItems);
+	// 	}
+	// }, [receipt, initialItems]);
+
 	// Check if receipt and items are not null to set isEditMode to true
 	//const isEditMode = receipt !== null && items !== null;
 
