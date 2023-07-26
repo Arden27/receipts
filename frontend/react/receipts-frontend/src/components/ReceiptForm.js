@@ -242,16 +242,19 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 				)}
 			</div>
 			<div className="mt-4 flex items-center justify-between">
-				{editMode ? (
-					<button className="focus:shadow-outline rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
-						Edit Receipt
-					</button>
-				) : (
-					<button className="focus:shadow-outline rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
-						Submit Receipt
-					</button>
-				)}
-				<button className="focus:shadow-outline bg-white-500 rounded px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white focus:outline-none" type="button">Delete</button>
+				<div className="flex">
+					{editMode ? (
+						<button className="focus:shadow-outline rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
+							Edit Receipt
+						</button>
+					) : (
+						<button className="focus:shadow-outline rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
+							Submit Receipt
+						</button>
+					)}
+					<button className="focus:shadow-outline px-4 py-2 text-red-500 hover:font-bold focus:outline-none" type="reset">Reset</button>
+				</div>
+				{editMode && <button className="focus:shadow-outline bg-white-500 rounded px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white focus:outline-none" type="button">Delete</button>}
 			</div>
 		</form>
 	);
