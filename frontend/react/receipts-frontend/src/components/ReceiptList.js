@@ -77,7 +77,7 @@ function ReceiptList( {onEdit} ) {
 							receipts.length > 0 &&
 							receipts.map((receipt) => (
 								<React.Fragment key={receipt.id}>
-									<tr className="group relative cursor-pointer transition-colors duration-200 ease-in-out hover:bg-gray-100" onClick={() => handleReceiptClick(receipt)}>
+									<tr className={`group relative cursor-pointer transition-colors duration-200 ease-in-out ${selectedReceipt && selectedReceipt.id === receipt.id ? 'bg-gray-100' : 'hover:bg-gray-100'}`} onClick={() => handleReceiptClick(receipt)}>
 										<td className="w-1/3 whitespace-nowrap px-6 py-2">{new Date(receipt.date).toLocaleDateString()}</td>
 										<td className="w-1/3 whitespace-nowrap px-6 py-2">{receipt.store}</td>
 										<td className="relative w-1/3 whitespace-nowrap px-6 py-2">
