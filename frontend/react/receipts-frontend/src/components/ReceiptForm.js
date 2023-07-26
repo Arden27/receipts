@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReceiptItemForm from "./ReceiptItemForm";
 import { createReceipt, createReceiptItem } from "../api";
+import { updateReceipt, updateReceiptItem } from "../api";
 import { useDispatch } from "react-redux";
 import { setShouldRefresh } from "../redux/store";
 
@@ -49,19 +50,18 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 		}
 	}, [receipt, initialItems]);
 
+	// useEffect(() => {
+	//   if (!receipt){
+	//     console.log('receiot is false')
+	//   } else{
+	//     console.log('receipt is true')
+	//   }
 
-  // useEffect(() => {
-  //   if (!receipt){
-  //     console.log('receiot is false')
-  //   } else{
-  //     console.log('receipt is true')
-  //   }
-
-  //   if (initialItems === null){
-  //     console.log('initialItems is null')
-  //   } else{
-  //     console.log('initialItems is true')
-  //   }
+	//   if (initialItems === null){
+	//     console.log('initialItems is null')
+	//   } else{
+	//     console.log('initialItems is true')
+	//   }
 
 	// 	if (receipt) {
 	// 		setStore(receipt.store);
@@ -85,54 +85,54 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		if (editMode) {
-			// Call updateReceipt API method
-      // Filter out the items that are not completed (missing either item_name, price, or category)
-			const cleanedItems = items.filter((item) => item.item_name || item.price || item.category);
+		// Filter out the items that are not completed (missing either item_name, price, or category)
+		const cleanedItems = items.filter((item) => item.item_name || item.price || item.category);
 
-			// Check if any item is missing item_name, price, or category
-			const hasItemsWithoutName = cleanedItems.some((item) => !item.item_name);
-			const hasItemsWithoutPrice = cleanedItems.some((item) => !item.price);
-			const hasItemsWithoutCategory = cleanedItems.some((item) => !item.category);
+		// Check if any item is missing item_name, price, or category
+		const hasItemsWithoutName = cleanedItems.some((item) => !item.item_name);
+		const hasItemsWithoutPrice = cleanedItems.some((item) => !item.price);
+		const hasItemsWithoutCategory = cleanedItems.some((item) => !item.category);
 
-			let missingItemFields = [];
-			let missingStoreField = "";
+		let missingItemFields = [];
+		let missingStoreField = "";
 
-			if (store === "") missingStoreField = "Please provide the name of the store.";
-			if (hasItemsWithoutName) missingItemFields.push("name");
-			if (hasItemsWithoutPrice) missingItemFields.push("price");
-			if (hasItemsWithoutCategory) missingItemFields.push("category");
+		if (store === "") missingStoreField = "Please provide the name of the store.";
+		if (hasItemsWithoutName) missingItemFields.push("name");
+		if (hasItemsWithoutPrice) missingItemFields.push("price");
+		if (hasItemsWithoutCategory) missingItemFields.push("category");
 
-			if (missingStoreField || missingItemFields.length > 0) {
-				let alertMessage = "";
+		if (missingStoreField || missingItemFields.length > 0) {
+			let alertMessage = "";
 
-				if (missingStoreField) {
-					alertMessage += missingStoreField + " ";
-				}
-
-				if (missingItemFields.length > 0) {
-					alertMessage += "All items must have a " + missingItemFields.join(" and ") + "!";
-				}
-
-				alert(alertMessage);
-				return;
+			if (missingStoreField) {
+				alertMessage += missingStoreField + " ";
 			}
 
-			let totalSum = cleanedItems.reduce((total, item) => total + parseFloat(item.price || 0), 0);
-			if (totalAmount != null && totalSum !== totalAmount) {
-				// Don't submit if the sum of item prices is more than the total amount provided
-				alert("sum is not equal to total");
-				return;
+			if (missingItemFields.length > 0) {
+				alertMessage += "All items must have a " + missingItemFields.join(" and ") + "!";
 			}
 
-			const receipt = {
-				date: date,
-				store: store,
-				total: totalSum.toFixed(2),
-			};
+			alert(alertMessage);
+			return;
+		}
 
+		let totalSum = cleanedItems.reduce((total, item) => total + parseFloat(item.price || 0), 0);
+		if (totalAmount != null && totalSum !== totalAmount) {
+			// Don't submit if the sum of item prices is more than the total amount provided
+			alert("sum is not equal to total");
+			return;
+		}
+
+		const receiptPayload = {
+			date: date,
+			store: store,
+			total: totalSum.toFixed(2),
+		};
+
+		if (!editMode) {
+			// Existing createReceipt logic
 			try {
-				const res = await createReceipt(receipt);
+				const res = await createReceipt(receiptPayload);
 				const receiptId = res.id; // get the id of the created receipt
 
 				// For each item, we add the receipt id and make a POST request to the ReceiptItem API
@@ -151,70 +151,31 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 
 				dispatch(setShouldRefresh(true));
 				onSubmit();
-        alert('edit')
 			} catch (error) {
 				console.error(error);
 			}
 		} else {
-			// Existing createReceipt logic
-			// Filter out the items that are not completed (missing either item_name, price, or category)
-			const cleanedItems = items.filter((item) => item.item_name || item.price || item.category);
-
-			// Check if any item is missing item_name, price, or category
-			const hasItemsWithoutName = cleanedItems.some((item) => !item.item_name);
-			const hasItemsWithoutPrice = cleanedItems.some((item) => !item.price);
-			const hasItemsWithoutCategory = cleanedItems.some((item) => !item.category);
-
-			let missingItemFields = [];
-			let missingStoreField = "";
-
-			if (store === "") missingStoreField = "Please provide the name of the store.";
-			if (hasItemsWithoutName) missingItemFields.push("name");
-			if (hasItemsWithoutPrice) missingItemFields.push("price");
-			if (hasItemsWithoutCategory) missingItemFields.push("category");
-
-			if (missingStoreField || missingItemFields.length > 0) {
-				let alertMessage = "";
-
-				if (missingStoreField) {
-					alertMessage += missingStoreField + " ";
-				}
-
-				if (missingItemFields.length > 0) {
-					alertMessage += "All items must have a " + missingItemFields.join(" and ") + "!";
-				}
-
-				alert(alertMessage);
-				return;
-			}
-
-			let totalSum = cleanedItems.reduce((total, item) => total + parseFloat(item.price || 0), 0);
-			if (totalAmount != null && totalSum !== totalAmount) {
-				// Don't submit if the sum of item prices is more than the total amount provided
-				alert("sum is not equal to total");
-				return;
-			}
-
-			const receipt = {
-				date: date,
-				store: store,
-				total: totalSum.toFixed(2),
-			};
-
+			// Call updateReceipt API method
 			try {
-				const res = await createReceipt(receipt);
-				const receiptId = res.id; // get the id of the created receipt
+				// Update the receipt
+				await updateReceipt(receipt.id, receiptPayload);
 
-				// For each item, we add the receipt id and make a POST request to the ReceiptItem API
-				const receiptItemsPromises = cleanedItems.map((item) => {
+				// For each item, update the receipt item
+				const receiptItemsPromises = cleanedItems.map((item, index) => {
+					// We assume that item.id exists, if not this will fail
 					const receiptItem = {
 						...item,
-						receipt: receiptId,
+						receipt: receipt.id,
 						category: parseInt(item.category),
-					}; // Ensure category is an integer (category ID)
-					console.log("posted data in ReceiptItemForm:");
-					console.log(receiptItem);
-					return createReceiptItem(receiptItem);
+					};
+
+					// If this item has an id, it's an existing item that needs to be updated
+					// If it doesn't have an id, it's a new item that needs to be created
+					if (item.id) {
+						return updateReceiptItem(item.id, receiptItem);
+					} else {
+						return createReceiptItem(receiptItem);
+					}
 				});
 
 				await Promise.all(receiptItemsPromises);
@@ -281,9 +242,16 @@ function ReceiptForm({ onSubmit, editMode, receipt = null, initialItems = null }
 				)}
 			</div>
 			<div className="mt-4 flex items-center justify-between">
-				<button className="focus:shadow-outline rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
-					Submit Receipt
-				</button>
+				{editMode ? (
+					<button className="focus:shadow-outline rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
+						Edit Receipt
+					</button>
+				) : (
+					<button className="focus:shadow-outline rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" type="submit">
+						Submit Receipt
+					</button>
+				)}
+				<button className="focus:shadow-outline bg-white-500 rounded px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white focus:outline-none" type="button">Delete</button>
 			</div>
 		</form>
 	);

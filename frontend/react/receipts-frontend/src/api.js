@@ -94,3 +94,15 @@ export const createReceiptItem = async (receiptItem) => {
 	const { data } = await API.post(`/api/receiptitems/`, receiptItem);
 	return data;
 };
+
+// update
+
+export const updateReceipt = async (id, updatedReceipt) => {
+	const { data } = await API.put(`/api/receipts/${id}/`, updatedReceipt);
+	return data;
+};
+
+export const updateReceiptItem = async (id, updatedReceiptItem) => {
+	const { data } = await API.put(`/api/receiptitems/${id}/`, updatedReceiptItem);
+	return data;
+};
