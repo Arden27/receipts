@@ -106,3 +106,14 @@ export const updateReceiptItem = async (id, updatedReceiptItem) => {
 	const { data } = await API.put(`/api/receiptitems/${id}/`, updatedReceiptItem);
 	return data;
 };
+
+// delete
+export const deleteReceipt = async (id) => {
+	const response = await API.delete(`/api/receipts/${id}/`);
+	return response;
+};
+
+export const deleteCategory = async (id) => {
+	const response = await API.delete(`/api/categories/${id}/`);
+	return response;
+};

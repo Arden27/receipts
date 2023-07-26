@@ -14,10 +14,17 @@ function MainApp({ setIsLoggedIn }) {
 	const [isFormVisible, setFormVisible] = useState(false);
 	const [editableReceipt, setEditableReceipt] = useState(null);
 	const [editableItems, setEditableItems] = useState(null);
-
+    const [isEditMode, setIsEditMode] = useState(false);
 	const isAuthError = useSelector((state) => state.isAuthError);
 
-    const isEditMode = editableReceipt !== null && editableItems !== null;
+    useEffect(() => {
+        if(editableReceipt !== null && editableItems !== null){
+            setIsEditMode(true)
+        } else{
+            setIsEditMode(false)
+        }
+    }, [editableReceipt, editableItems])
+    //const isEditMode = editableReceipt !== null && editableItems !== null;
 
 	useEffect(() => {
 		dispatch({ type: "SET_SHOULD_REFRESH", payload: true });
@@ -57,10 +64,16 @@ function MainApp({ setIsLoggedIn }) {
 		dispatch({ type: "SET_SHOULD_REFRESH", payload: true });
 	};
 
+    const handleCancel = () => {
+		setFormVisible(!isFormVisible);
+        setEditableItems(null);
+        setEditableReceipt(null);
+	}
+
 	return (
 		<div className="App grid h-screen grid-cols-2 grid-rows-[auto_auto_1fr]">
 			<nav className="col-span-2 flex justify-between bg-blue-400 p-4 text-white">
-				<button onClick={() => setFormVisible(!isFormVisible)} className={isFormVisible ? "rounded border border-red-500 bg-white px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white" : "rounded bg-green-500 px-4 py-2 font-bold hover:bg-green-700"}>
+				<button onClick={handleCancel} className={isFormVisible ? "rounded border border-red-500 bg-white px-4 py-2 font-bold text-red-500 hover:bg-red-500 hover:text-white" : "rounded bg-green-500 px-4 py-2 font-bold hover:bg-green-700"}>
 					{isFormVisible ? "Cancel" : "Add Receipt"}
 				</button>
 				<button onClick={handleLogout} className="rounded bg-red-500 px-4 py-2 font-bold hover:bg-red-700">
@@ -68,7 +81,7 @@ function MainApp({ setIsLoggedIn }) {
 				</button>
 			</nav>
 			<div className="col-span-1 row-span-2 overflow-auto">
-				{isFormVisible && isEditMode ? <ReceiptForm onSubmit={handleSubmit} editMode={true} receipt={editableReceipt} initialItems={editableItems} /> : isFormVisible && <ReceiptForm onSubmit={handleSubmit} />}
+                {isFormVisible && <ReceiptForm onSubmit={handleSubmit} editMode={isEditMode} receipt={editableReceipt} initialItems={editableItems} />}
 				<ReceiptList onEdit={handleEdit} />
 			</div>
 			<div className="col-start-2 row-start-2 overflow-auto">
