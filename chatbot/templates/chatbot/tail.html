@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="icon" href="{% static 'chatbot/img/favicon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-full m-0 overflow-x-hidden bg-gray-100 font-sans text-base text-gray-800">
+
+    <nav class="fixed top-0 w-full flex justify-end items-center h-12 p-3 bg-gray-100 bg-opacity-80 backdrop-blur-md shadow">
+        <a href="#home-section" class="mx-4">Home</a>
+        <a href="#skills-section" class="mx-4">Skills</a>
+        <a href="#portfolio-section" class="mx-4">Portfolio</a>
+        <a href="#about-section" class="mx-4 mr-20">About</a>
+    </nav>
+
+    <section id="home-section" class="h-screen flex items-center justify-start p-12">
+        <div class="flex items-center w-full">
+            <img src="{% static 'chatbot/img/profile_picture.png' %}" alt="Profile Picture" class="w-1/2 mr-5 shadow-md">
+            <div class="ml-5">
+                <div class="text-lg font-semibold text-orange-600 mb-1">Hello, I'm</div>
+                <h3 class="text-3xl font-bold mb-1">Artem Furman</h3>
+                <p class="text-lg font-medium text-green-500 mb-5"><span>Python Developer</span></p>
+                <p class="mb-5">I specialize in the creation and deployment of email marketing campaigns.</p>
+                <a href="#portfolio-section" class="bg-orange-600 text-white py-2 px-5 inline-block rounded-lg font-medium hover:bg-white hover:text-orange-600 hover:border hover:border-orange-600 transition-all ease-in-out duration-200">
+                    Portfolio
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills-section" class="h-screen flex items-center justify-start p-12 flex-wrap">
+        <h2 class="text-3xl font-bold mb-10 w-full text-center">Skills</h2>
+        <div class="w-1/3 px-5">
+            <h3 class="text-2xl font-medium mb-5">Frontend</h3>
+            <div class="grid grid-cols-2 gap-5">
+                {% for skill in skills.frontend %}
+                    <div class="flex flex-col items-center">
+                        <img src="{% static skill.icon %}" alt="{{ skill.name }} icon" class="w-14 h-14">
+                        <p>{{ skill.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="w-1/3 px-5">
+            <h3 class="text-2xl font-medium mb-5">Backend</h3>
+            <div class="grid grid-cols-2 gap-5">
+                {% for skill in skills.backend %}
+                    <div class="flex flex-col items-center">
+                        <img src="{% static skill.icon %}" alt="{{ skill.name }} icon" class="w-14 h-14">
+                        <p>{{ skill.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="w-1/3 px-5">
+            <h3 class="text-2xl font-medium mb-5">Tools</h3>
+            <div class="grid grid-cols-2 gap-5">
+                {% for skill in skills.tools %}
+                    <div class="flex flex-col items-center">
+                        <img src="{% static skill.icon %}" alt="{{ skill.name }} icon" class="w-14 h-14">
+                        <p>{{ skill.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio-section" class="h-screen flex items-center justify-start p-12 flex-wrap">
+        <h2 class="text-3xl font-bold mb-10 w-full text-center">Portfolio</h2>
+        <div class="grid grid-cols-3 gap-5 w-full">
+            {% for project in projects %}
+                <div class="flex flex-col items-center">
+                    <img src="{% static project.image %}" alt="{{ project.name }} screenshot" class="w-2/3 h-auto shadow-lg">
+                    <h3 class="text-2xl font-medium mt-5 mb-2">{{ project.name }}</h3>
+                    <p class="text-center">{{ project.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="about-section" class="h-screen flex items-center justify-start p-12 flex-wrap">
+        <h2 class="text-3xl font-bold mb-10 w-full text-center">About Me</h2>
+        <div class="w-full grid grid-cols-2 gap-5">
+            <img src="{% static 'chatbot/img/profile_picture.png' %}" alt="Profile Picture" class="w-2/3 h-auto shadow-lg justify-self-center">
+            <div class="flex flex-col justify-center">
+                <p class="mb-5">I am a full-stack developer specializing in Python. I have 5+ years of experience in the development and deployment of web applications. I am passionate about creating user-friendly, efficient, and scalable software.</p>
+                <a href="mailto:artem.furman@example.com" class="bg-orange-600 text-white py-2 px-5 inline-block rounded-lg font-medium hover:bg-white hover:text-orange-600 hover:border hover:border-orange-600 transition-all ease-in-out duration-200">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'chatbot/js/new_main.js' %}"></script>
+    {% comment %} <script src="{% static 'chatbot/js/chatbot.js' %}"></script> {% endcomment %}
+</body>
+</html>
