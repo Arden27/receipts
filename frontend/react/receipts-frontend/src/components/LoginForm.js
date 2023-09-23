@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loginUser } from "../api";
 import { useDispatch } from "react-redux";
 import { setShouldRefresh } from "../redux/store";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+// Function to parse the query parameters
+const getQueryParams = (search) => {
+	return new URLSearchParams(search);
+}
 
 function LoginForm({ onLogin }) {
 	const [username, setUsername] = useState("");
@@ -10,6 +16,19 @@ function LoginForm({ onLogin }) {
 	const [error, setError] = useState(null);
 
 	const dispatch = useDispatch();
+
+	// Use the useLocation hook to get the current location object
+    const location = useLocation();
+
+	// Pre-fill with showcase account data if comming from portfolio
+    useEffect(() => {
+        const params = getQueryParams(location.search);
+        
+        if (params.get("portfolio") === "true") {
+            setUsername("showcaseAccount"); // replace with your showcase username
+            setPassword("h1v3h1v314hvh13g$#$vghgh"); // replace with your showcase password
+        }
+    }, [location]);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
