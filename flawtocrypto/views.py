@@ -22,6 +22,7 @@ def get_historical_bitcoin_price(days="max"):
         curr_date = datetime.fromtimestamp(prices[i][0] / 1000).date()
         curr_price = prices[i][1]
 
+        #some old data might have gaps, finding them and filling out with avarage price
         if prev_date and curr_date < prev_date - timedelta(days=1):
             # Compute average price and fill in the gap
             gap_days = (prev_date - curr_date).days
@@ -38,11 +39,11 @@ def get_historical_bitcoin_price(days="max"):
 
     new_prices.reverse()  # Reverse the list to keep the original order
 
-    # Write the prices to a text file
-    with open('bitcoin_prices.txt', 'w') as f:
-        for price in new_prices:
-            date = datetime.fromtimestamp(price[0] / 1000).date()
-            f.write(f"{date}: ${price[1]}\n")
+    # # Write the prices to a text file
+    # with open('bitcoin_prices.txt', 'w') as f:
+    #     for price in new_prices:
+    #         date = datetime.fromtimestamp(price[0] / 1000).date()
+    #         f.write(f"{date}: ${price[1]}\n")
 
     return new_prices
 
