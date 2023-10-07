@@ -7,6 +7,5 @@ django-allauth
 dj-rest-auth
 django-cors-headers
 python-dateutil
-openai
 
 # run 'pip install -r requirements.txt'

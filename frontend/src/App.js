@@ -15,7 +15,7 @@ function App() {
 	};
 
 	useEffect(checkIsLoggedIn, []);
-	const basename = process.env.NODE_ENV === "production" ? "/receiptapp/" : "/";
+	const basename = process.env.NODE_ENV === "production" ? "/" : "/";
 	return (
 		<Router basename={basename}>
 			<Routes>
